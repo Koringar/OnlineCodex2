@@ -1,7 +1,7 @@
 {
     "name": "Necrons",
     "version": 7,
-    "date": "2015-08-11 17:00",
+    "date": "2015-08-11 19:20",
     "groups": {
         "HQ": [
             {
@@ -206,6 +206,8 @@
                 ]
             }
         ],
-        "support": []
+        "support": [],
+        "storm": [],
+        "hulk": []
     }
 }

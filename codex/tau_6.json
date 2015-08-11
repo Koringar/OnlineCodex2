@@ -1,0 +1,13 @@
+{
+    "name": "Necrons",
+    "version": 7,
+    "date": "2015-08-11 19:20",
+    "groups": {
+      "HQ": [],
+      "default": [],
+      "elite": [],
+      "support": [],
+      "storm": [],
+      "hulk": []
+    }
+}
