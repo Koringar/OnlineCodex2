@@ -1,6 +1,7 @@
 {
     "name": "Necrons",
     "version": 7,
+    "date": "2015-08-11 17:00",
     "groups": {
         "HQ": [
             {
@@ -34,20 +35,6 @@
             {
                 "name": "Lord",
                 "cost": 50,
-                "stats": {
-                    "image": "img/necron_7/lord.png", 
-                    "type": "Inf", 
-                    "char": true, 
-                    "KG": 4, 
-                    "BF": 4, 
-                    "S": 5, 
-                    "W": 5, 
-                    "LP": 2, 
-                    "I": 2, 
-                    "A": 2, 
-                    "MW": 10, 
-                    "RW": 3
-                },
                 "options": [
                     [
                         {"name": "Stab des Lichts", "cost": 0, "default": true, "replaceGrp": 1},
