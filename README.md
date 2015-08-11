@@ -1,3 +1,9 @@
-# OnlineCodex2
+# Online Codex 2
 
-Hier soll der neue OnlineCodex entstehen.
+Hier soll der neue Online Codex entstehen.
+
+## Entwicklerhinweise
+
+- Bitte eigenen Branch anlegen die Änderungen werden dann von mir (Martin) in den master gemergt
+- Bitte keine Projektdateien aus der IDE pushen (siehe .gitignore)/ nur Daten für die lauffähige Anwendung
+- dokumentieren nicht vergessen!
