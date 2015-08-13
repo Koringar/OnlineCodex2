@@ -4,10 +4,10 @@
         <title>Online Codex2</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="/OnlineCodex2/js/libs/jquery-mobile/jquery.mobile.css">
-        <link rel="stylesheet" href="/OnlineCodex2/css/onlinecode2.css">
-        <script src="/OnlineCodex2/js/libs/jquery/jquery.js"></script>
-        <script src="/OnlineCodex2/js/libs/jquery-mobile/jquery.mobile.js"></script>
+        <link rel="stylesheet" href="js/libs/jquery-mobile/jquery.mobile.css">
+        <link rel="stylesheet" href="css/onlinecode2.css">
+        <script src="js/libs/jquery/jquery.js"></script>
+        <script src="js/libs/jquery-mobile/jquery.mobile.js"></script>
     </head>
     <body>
         <div data-role="page">
