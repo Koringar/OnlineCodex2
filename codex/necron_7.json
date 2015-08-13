@@ -180,7 +180,54 @@
               ]
             }
         ],
-        "elite": [],
+        "elite": [
+          {
+            "name": "Lychguard",
+            "cost": 125,
+            "minGroup": 5,
+            "maxGroup": 5,
+            "entityCost": 25,
+            "option": [
+              [
+                {"name": "Kriegssense", "cost": 0, "default": true},
+                {"name": "Hyperphasenschwerter und Dispersionsschilde", "cost": 5}
+              ]
+            ]
+          },
+          {
+            "name": "Deathmarks",
+            "cost": 90,
+            "minGroup": 5,
+            "maxGroup": 10,
+            "entityCost": 18,
+            "options": [
+              {"name": "Synapsen-Desintegrator", "cost": 0, "default": true}
+            ]
+          },
+          {
+            "name": "Flayed Ones",
+            "cost": 65,
+            "minGroup": 5,
+            "maxGroup": 10,
+            "entityCost": 13,
+            "options": [
+              {"name": "Zwei Albtraumklauen", "cost": 0, "default": true}
+            ]
+          },
+          {
+            "name": "Triarch Praetorians",
+            "cost": 140,
+            "minGroup": 5,
+            "maxGroup": 10,
+            "entityCost": 28,
+            "options": [
+              [
+                {"name": "Eidstab", "cost": 0, "default": true},
+                {"name": "Entropieklingen und Partikelwerfer", "cost": 0}
+              ]
+            ]
+          }
+        ],
         "default": [
             {
                 "name": "Warriors",
