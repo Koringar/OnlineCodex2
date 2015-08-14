@@ -1,8 +1,8 @@
 TARGET = build
 
-.PHONY: all clean codex
+.PHONY: all clean codex js css
 
-all: $(TARGET) $(TARGET)/index.html $(TARGET)/codex
+all: $(TARGET) $(TARGET)/index.html codex js css
 
 $(TARGET):
 	mkdir -p $(TARGET)
@@ -10,8 +10,14 @@ $(TARGET):
 $(TARGET)/index.html:
 	php index.php > $(TARGET)/index.html
 
-$(TARGET)/codex:
+codex:
 	cp -r codex $(TARGET)/
+
+js:
+	cp -r js $(TARGET)/
+
+css:
+	cp -r css $(TARGET)/
 
 clean:
 	rm -rf $(TARGET)
