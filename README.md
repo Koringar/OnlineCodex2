@@ -14,7 +14,7 @@ Abhängigkeiten (Debianpaketnamen):
 - `make`
 - `php-cli`
 
-Zum Testen kann man die webserver.sh nutzen, die auch gleich den Defaultbrowser mitstartet oder einen anderen Webserver mit php Unterstützung.
+Zum Testen kann man die `webserver.sh` nutzen, die auch gleich den Defaultbrowser mit startet oder einen anderen Webserver mit php Unterstützung.
 
 Zu verwendene Buildtargets:
 - `make` bzw `make all` baut die Anwendung in `./build/`
