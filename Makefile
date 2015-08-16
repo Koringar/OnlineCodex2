@@ -11,7 +11,9 @@ $(TARGET)/index.html:
 	php index.php > $(TARGET)/index.html
 
 codex:
-	cp -r codex $(TARGET)/
+	mkdir -p $(TARGET)/codex
+	php codex/index.json.php > $(TARGET)/codex/index.json
+	cp -r codex/*.json $(TARGET)/codex/
 
 js:
 	cp -r js $(TARGET)/
