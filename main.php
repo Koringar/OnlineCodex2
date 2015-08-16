@@ -14,10 +14,28 @@
  
             <div data-role="header" style="overflow:hidden;">
                 <h1>Online Codex2</h1>
-                <button href="#" data-icon="gear" data-iconpos="notext" class="ui-btn-right">Einstellungen</button>
+                <a href="#optionsMenu" data-rel="popup" data-icon="gear" data-iconpos="notext" data-transition="none" class="ui-btn-right">Einstellungen</a>
+                <div data-role="popup" id="optionsMenu" data-theme="a">
+                    <ul data-role="listview" data-inset="true">
+                        <li data-icon="false"><a href="#">Speichern</a></li>
+                        <li data-icon="false"><a href="#">Laden</a></li>
+                        <li data-icon="false"><a href="#">Drucken</a></li>
+                        <li data-icon="false"><a href="#">Teilen</a></li>
+                        <li data-icon="false"><a href="#">Hilfe</a></li>
+                        <li data-icon="false"><a href="#">Über diese Anwendung</a></li>
+                    </ul>
+                </div>
                 <div data-role="navbar" data-iconpos="left">
-                    <button href="#" data-icon="plus" data-iconpos="left">Armee</button>
-                    <button href="#" data-icon="plus" data-iconpos="left">Einheit</button>
+                    <a href="#addArmee" data-rel="popup" data-icon="plus" data-transition="none" data-iconpos="left">Armee</a>
+                    <!--  Durch JavaScript und JSon ersetzen-->
+                    <div data-role="popup" id="addArmee" data-theme="a">
+                        <ul data-role="listview" data-inset="true">
+                            <li data-icon="false" style="float:none;min-width:200px;"><a href="#">Necrons</a></li>
+                            <li data-icon="false" style="float:none;min-width:200px;"><a href="#">Sternenreich der Tau</a></li>
+                            <li data-icon="false" style="float:none;min-width:200px;"><a href="#">...</a></li>
+                        </ul>
+                    </div>
+                    <a href="#addTroop" data-icon="plus" data-iconpos="left">Einheit</a>
                     <div id="summary">Gesamtpunkte: 1008</div>
                 </div><!-- /navbar -->
             </div><!-- /header -->
