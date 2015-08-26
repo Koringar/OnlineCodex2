@@ -13,7 +13,9 @@ $(TARGET)/index.html:
 codex:
 	mkdir -p $(TARGET)/codex
 	php codex/index.json.php > $(TARGET)/codex/index.json
-	cp -r codex/*.json $(TARGET)/codex/
+	for file in codex/*.json; do \
+	  php helper.php minJson $$file $(TARGET)/$$file ;\
+	done
 
 .PHONY: js
 js:
