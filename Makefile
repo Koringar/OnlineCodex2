@@ -7,7 +7,7 @@ $(TARGET):
 	mkdir -p $(TARGET)
 
 $(TARGET)/index.html:
-	php index.php > $(TARGET)/index.html
+	php index.php make > $(TARGET)/index.html
 
 .PHONY: codex
 codex:
