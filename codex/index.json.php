@@ -12,7 +12,10 @@ foreach ($files as $file) {
   }
   $content = json_decode(file_get_contents($codexDir . "/" . $file));
   $name = $content->{"name"};
-  $armee[$name] = $file;
+  $armee[] = [
+      "name" => $name,
+      "file" => $file
+      ];
 }
   
 echo(json_encode($armee));
