@@ -1,3 +1,5 @@
 #! /bin/bash
-/usr/bin/x-www-browser localhost:8080/index.php >/dev/null 2>&1 &
+make clean && make
+/usr/bin/x-www-browser localhost:8080/index.html >/dev/null 2>&1 &
+cd build
 php -S localhost:8080

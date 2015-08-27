@@ -25,7 +25,6 @@
                     {"name": "Phasenverzerrer", "cost": 25},
                     {"name": "Regeneratorspaere", "cost": 25},
                     [
-                        
                         {"name": "Der Schleier der Finsternis", "cost": 25},
                         {"name": "Die Faust des Pyromanen", "cost": 30},
                         {"name": "Die Aura des Schreckens", "cost": 35},
