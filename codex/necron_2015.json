@@ -1,7 +1,7 @@
 {
     "name": "Necrons",
     "version": 7,
-    "date": "2015-08-11 19:20",
+    "date": "2015-08-27 18:00",
     "groups": {
         "HQ": [
             {
@@ -108,46 +108,46 @@
               "name": "Nemesor Zahndrekh",
               "cost": 150,
               "options": [
-                {"name": "Stab des Lichts", "default": true},
-                {"name": "Phasenverzerrer", "default": true}
+                {"name": "Stab des Lichts", "must": true},
+                {"name": "Phasenverzerrer", "must": true}
               ]
             },
             {
               "name": "Vargard Obyron",
               "cost": 120,
               "options": [
-                {"name": "Kriegssense", "default": true},
-                {"name": "Geistermantel", "default": true}
+                {"name": "Kriegssense", "must": true},
+                {"name": "Geistermantel", "must": true}
               ]
             },
             {
               "name": "Illuminor Szeras",
               "cost": 110,
               "options": [
-                {"name": "Geisterspeer", "default": true}
+                {"name": "Geisterspeer", "must": true}
               ]
             },
             {
               "name": "Orikan the Diviner",
               "cost": 120,
               "options": [
-                {"name": "Phasenverzerrer", "default": true},
-                {"name": "Stab der Zukunft", "default": true}
+                {"name": "Phasenverzerrer", "must": true},
+                {"name": "Stab der Zukunft", "must": true}
               ]
             },
             {
               "name": "Anrakyr the Traveller",
               "cost": 160,
               "options": [
-                {"name": "Tachyonenpfeil", "default": true},
-                {"name": "Kriegssense", "default": true}
+                {"name": "Tachyonenpfeil", "must": true},
+                {"name": "Kriegssense", "must": true}
               ]
             },
             {
               "name": "Trazyn the Infinite",
               "cost": 130,
               "options": [
-                {"name": "Empathischer Schockstab", "default": true}
+                {"name": "Empathischer Schockstab", "must": true}
               ]
             },
             {
@@ -161,7 +161,7 @@
                 {"name": "Quantenschilde"}
               ],
               "attach": [
-                {"name": "Overlord", "default": true}
+                {"name": "Overlord", "must": true}
               ]
             }
         ],
@@ -189,7 +189,7 @@
             "maxGroup": 10,
             "entityCost": 18,
             "options": [
-              {"name": "Synapsen-Desintegrator", "default": true}
+              {"name": "Synapsen-Desintegrator", "must": true}
             ],
             "attach": [
               {"name": "Night Scythe"}
@@ -202,7 +202,7 @@
             "maxGroup": 10,
             "entityCost": 13,
             "options": [
-              {"name": "Zwei Albtraumklauen", "default": true}
+              {"name": "Zwei Albtraumklauen", "must": true}
             ]
           },
           {
@@ -227,27 +227,28 @@
             "minGroup": 1,
             "maxGroup": 3,
             "entityCost": 125,
+            "note": "todo",
             "options": [
               [
                 {"name": "Hitzestrahker", "default": true, "perModel": true},
                 {"name": "Partikelkanone", "cost": 5, "perModel": true},
                 {"name": "Synchronisierte Schwere Gaus-Kanone", "cost": 10, "perModel": true}
               ],
-              {"name": "Quantenschilde", "default": true}
+              {"name": "Quantenschilde", "must": true}
             ]
           },
           {
             "name": "C'Tan shard of the Nightbringer",
             "cost": 240,
             "options": [
-              {"name": "Kräfte der C'Tan", "default": true}
+              {"name": "Kräfte der C'Tan", "must": true}
             ]
           },
           {
             "name": "C'Tan shard of the Deceiver",
             "cost": 240,
             "options": [
-              {"name": "Kräfte der C'Tan", "default": true}
+              {"name": "Kräfte der C'Tan", "must": true}
             ]
           }
         ],
@@ -259,7 +260,7 @@
                 "maxGroup": 20,
                 "entityCost": 13,
                 "options": [
-                    {"name": "Gauss-Desintegrator", "default": true}
+                    {"name": "Gauss-Desintegrator", "must": true}
                 ],
                 "attach": [
                   {"name": "Ghost Ark"},
@@ -285,18 +286,18 @@
         ],
         "storm": [
           {
-            "name": "Night Wcythe",
+            "name": "Night Scythe",
             "cost": 130,
             "options": [
-              {"name": "Synchronisierter Tesla-Annihilator", "default": true}
+              {"name": "Synchronisierter Tesla-Annihilator", "must": true}
             ]
           },
           {
             "name": "Ghost Ark",
             "cost": 105,
             "options": [
-              {"name": "Quantenschilde", "default": true},
-              {"name": "Zwei Gauss-Desintegratorphalangen", "default": true}
+              {"name": "Quantenschilde", "must": true},
+              {"name": "Zwei Gauss-Desintegratorphalangen", "must": true}
             ]
           },
           {
@@ -305,6 +306,7 @@
             "minGroup": 3,
             "maxGroup": 6,
             "entityCost": 40,
+            "note": "todo",
             "options": [
                 {"name": "Fesselspulen", "cost": 3, "perModel": true},
                 {"name": "Partikelwerfer", "cost": 5, "perModel": true},
@@ -316,8 +318,7 @@
             "cost": 60,
             "minGroup": 3,
             "maxGroup": 9,
-            "entityCost": 20,
-            "options": []
+            "entityCost": 20
           },
           {
             "name": "Tomb Blades",
@@ -325,6 +326,7 @@
             "minGroup": 3,
             "maxGroup": 10,
             "entityCost": 18,
+            "note": "todo",
             "options": [
               [
                 {"name": "Synchronisierte Gauss-Blaster", "default": true, "perModel": true},
@@ -345,7 +347,7 @@
             "maxGroup": 6,
             "entityCost": 40,
             "options": [
-              {"name": "Gauss-Kanone", "default": true},
+              {"name": "Gauss-Kanone", "must": true},
               {"name": "Upgrade Heavy Destroyer", "cost": 10}
             ]
           }
@@ -358,7 +360,7 @@
             "maxGroup": 3,
             "entityCost": 50,
             "options": [
-              {"name": "Schwere Gauss-Kanone", "default": true}
+              {"name": "Schwere Gauss-Kanone", "must": true}
             ]
           },
           {
@@ -367,6 +369,7 @@
             "minGroup": 1,
             "maxGroup": 3,
             "entityCost": 50,
+            "note": "todo",
             "options": [
               {"name": "Fabrikatorklauen-Satz", "cost": 5, "perModel": true},
               {"name": "Zwielichtprisma", "cost": 10, "perModel": true},
@@ -377,17 +380,17 @@
             "name": "Doom Scythe",
             "cost": 160,
             "options": [
-              {"name": "Synchronisierter Tesla-Annihilator", "default": true},
-              {"name": "Todesstrahl", "default": true}
+              {"name": "Synchronisierter Tesla-Annihilator", "must": true},
+              {"name": "Todesstrahl", "must": true}
             ]
           },
           {
             "name": "Monolith",
             "cost": 200,
             "options": [
-              {"name": "Partikelgeschütz", "default": true},
-              {"name": "Tor der Ewigkeit", "default": true},
-              {"name": "Vier Gauss-Fluxprojektoren", "default": true}
+              {"name": "Partikelgeschütz", "must": true},
+              {"name": "Tor der Ewigkeit", "must": true},
+              {"name": "Vier Gauss-Fluxprojektoren", "must": true}
             ]
           },
           {
@@ -398,24 +401,24 @@
                 {"name": "Gauss-Kanone", "default": true},
                 {"name": "Tesla-Kanone"}
               ],
-              {"name": "Synchronisierter Tesla-Annihilator", "default": true},
-              {"name": "Quantenschilde", "default": true}
+              {"name": "Synchronisierter Tesla-Annihilator", "must": true},
+              {"name": "Quantenschilde", "must": true}
             ]
           },
           {
             "name": "Doomsday Ark",
             "cost": 170,
             "options": [
-              {"name": "Dominator-Kanone", "default": true},
-              {"name": "Zwei Gauss-Desintegratorphalangen", "default": true},
-              {"name": "Quantenschilde", "default": true}
+              {"name": "Dominator-Kanone", "must": true},
+              {"name": "Zwei Gauss-Desintegratorphalangen", "must": true},
+              {"name": "Quantenschilde", "must": true}
             ]
           },
           {
             "name": "Transcendent C'Tan",
             "cost": 250,
             "options": [
-              {"name": "Kräfte der C'Tan", "default": true}
+              {"name": "Kräfte der C'Tan", "must": true}
             ]
           }
         ],
@@ -424,24 +427,24 @@
             "name": "Tesseract Vault",
             "cost": 550,
             "options": [
-              {"name": "Vier Tesla-Sphären", "default": true},
-              {"name": "Kräfte der C'Tan", "default": true}
+              {"name": "Vier Tesla-Sphären", "must": true},
+              {"name": "Kräfte der C'Tan", "must": true}
             ]
           },
           {
             "name": "Obelisk",
             "cost": 300,
             "options": [
-              {"name": "Vier Tesla-Sphären", "default": true}
+              {"name": "Vier Tesla-Sphären", "must": true}
             ]
           },
           {
             "name": "Imotekh the Stormlord",
             "cost": 190,
             "options": [
-              {"name": "Flammenfaust", "default": true},
-              {"name": "Phasenverzerrer", "default": true},
-              {"name": "Stab des Vernichters", "default": true}
+              {"name": "Flammenfaust", "must": true},
+              {"name": "Phasenverzerrer", "must": true},
+              {"name": "Stab des Vernichters", "must": true}
             ]
           }
         ]

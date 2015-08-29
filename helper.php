@@ -10,7 +10,36 @@ function checkCodexJson() {
       continue;
     }
     $content = json_decode(file_get_contents($codexDir . "/" . $file));
-    //TODO
+
+    echo $content->{"name"} ."\n";
+    echo $content->{"version"} ."\n";
+    echo $content->{"date"} ."\n";
+    $groups = $content->{"groups"};
+    $names = array();
+    
+    // suche namen für attach
+    foreach ($groups as $group) {
+      foreach ($group as $entity) {
+        $names[] = $entity->{"name"};
+      }
+    }
+    // checks
+    foreach ($groups as $group) {
+      foreach ($group as $entity) {
+        // TODO checks
+      }
+    }
+    // TODO HQ
+    // elite
+    // default
+    // storm
+    // support
+    // hulk
+    
+    // must = default
+    // min <= max
+    // default = cost: 0
+    // note: todo = print warning
   }
 }
 

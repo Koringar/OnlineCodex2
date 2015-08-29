@@ -11,7 +11,7 @@ function get(uri, callback) {
     method: "GET",
     url: uri,
     dataType: "json",
-    async: false
+    async: (callback === false ? false : true)
   });
   if(callback === false) {
     var returnValue;
@@ -23,4 +23,8 @@ function get(uri, callback) {
     ajax.done(callback);
     return callback;
   }
+}
+
+function getArmyIndex() {
+  return get("codex/index.json");
 }

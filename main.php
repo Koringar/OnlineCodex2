@@ -12,7 +12,7 @@
         <script type="text/javascript">
           $(document).ready(function() {
             // kleiner Test
-            var indexJson = get("codex/index.json");
+            var indexJson = getArmyIndex();
             if(console && console.log) {
               console.log(typeof indexJson);
               console.log(indexJson);
