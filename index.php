@@ -4,10 +4,9 @@
 $useCacheManifest = false;
 // END CONFIG
 
+$live = false;
 if($argv[1] <> "make") {
-  $die = "live mode no longer supportet";
-  echo "<h1>$die</h1>";
-  die("$die");
+  $live = true;
 }
 
 require 'main.php';
