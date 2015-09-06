@@ -38,7 +38,7 @@ function checkCodexJson() {
           godie("free as freebeer for $lastName");
         }
         if(isset($entity->{"note"})) {
-          echo $entity->{"note"} . " in $lastName\n";
+          echo  "note on $lastName: " . $entity->{"note"} . "\n";
         }
         // check minGroup <= maxGroup
         if(isset($entity->{"minGroup"}) || isset($entity->{"maxGroup"})) {
