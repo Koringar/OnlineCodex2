@@ -11,9 +11,6 @@ function checkCodexJson() {
     }
     $content = json_decode(file_get_contents($codexDir . "/" . $file));
 
-    echo $content->{"name"} ."\n";
-    echo $content->{"version"} ."\n";
-    echo $content->{"date"} ."\n";
     $groups = $content->{"groups"};
     $names = array();
     $lastName = "";
