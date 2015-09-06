@@ -4,10 +4,10 @@
         <title>Online Codex2</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="js/libs/jquery-mobile/jquery.mobile<?php echo $live ? '.min' : '' ?>.css">
+        <link rel="stylesheet" href="js/libs/jquery-mobile/jquery.mobile<?php echo $live ? '' : '.min' ?>.css">
         <link rel="stylesheet" href="css/onlinecode2.css">
-        <script src="js/libs/jquery/jquery<?php echo $live ? '.min' : '' ?>.js"></script>
-        <script src="js/libs/jquery-mobile/jquery.mobile<?php echo $live ? '.min' : '' ?>.js"></script>
+        <script src="js/libs/jquery/jquery<?php echo $live ? '' : '.min' ?>.js"></script>
+        <script src="js/libs/jquery-mobile/jquery.mobile<?php echo $live ? '' : '.min' ?>.js"></script>
         <script src="js/onlinecodex2.js"></script>
         <script type="text/javascript">
           $(document).ready(function() {
