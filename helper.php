@@ -26,33 +26,33 @@ function checkCodexJson() {
       foreach ($group as $entity) {
         // check name
         if(!isset($entity->{"name"})) {
-          godie("entity name not set after entity $lastName");
+          godie("entity name not set after entity $file:$lastName");
         } else {
           $lastName = $entity->{"name"};
         }
         // check cost
         if(!isset($entity->{"cost"})) {
-          godie("free as freebeer for $lastName");
+          godie("free as freebeer for $file:$lastName");
         }
         if(isset($entity->{"note"})) {
-          echo  "note on $lastName: " . $entity->{"note"} . "\n";
+          echo  "note on $file:$lastName: " . $entity->{"note"} . "\n";
         }
         // check minGroup <= maxGroup
         if(isset($entity->{"minGroup"}) || isset($entity->{"maxGroup"})) {
           // min and max exists
           if(!isset($entity->{"minGroup"})) {
-            godie("minGroup not set in $lastName");
+            godie("minGroup not set in $file:$lastName");
           }
           if(!isset($entity->{"maxGroup"})) {
-            godie("maxGroup not set in $lastName");
+            godie("maxGroup not set in $file:$lastName");
           }
           // min <= max
           if($entity->{"minGroup"} > $entity->{"maxGroup"}) {
-            godie("minGroup greater as maxGroup in $lastName");
+            godie("minGroup greater as maxGroup in $file:$lastName");
           }
           // more cost more
           if(!isset($entity->{"entityCost"})) {
-            godie("no entity Cost in $lastName");
+            godie("no entity Cost in $file:$lastName");
           }
         }
         // TODO "options"
