@@ -26,5 +26,5 @@ function get(uri, callback) {
 }
 
 function getArmyIndex(live) {
-  return get("codex/index.json" & (live === true ? ".php" : ""));
+  return get("codex/index.json" + (live === true ? ".php" : ""));
 }
