@@ -9,6 +9,7 @@
         <script src="js/libs/jquery/jquery<?php echo $live ? '' : '.min' ?>.js"></script>
         <script src="js/libs/jquery-mobile/jquery.mobile<?php echo $live ? '' : '.min' ?>.js"></script>
         <script src="js/onlinecodex2.js"></script>
+        <script src="js/oc2.h.js<?php echo $live ? '.php' : '' ?>"></script>
         <script type="text/javascript">
           $(document).ready(function() {
             // kleiner Test

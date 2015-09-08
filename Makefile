@@ -19,7 +19,10 @@ codex:
 
 .PHONY: js
 js:
-	cp -r js $(TARGET)/
+	mkdir -p $(TARGET)/js
+	cp js/onlinecodex2.js $(TARGET)/js/onlinecodex2.js
+	php js/oc2.h.js.php make > $(TARGET)/js/oc2.h.js
+	cp -r js/libs/ $(TARGET)/js/libs/
 
 .PHONY: css
 css:
@@ -27,7 +30,7 @@ css:
 
 .PHONY: clean
 clean:
-	rm -rf $(TARGET)
+	rm -rf $(TARGET)/*
 
 .PHONY: checkCodexJson
 checkCodexJson:
