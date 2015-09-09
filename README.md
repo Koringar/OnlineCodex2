@@ -10,6 +10,8 @@ Hier soll der neue Online Codex entstehen.
 
 Zum Testen kann das Projekt in einem Webserver mit aktiven PHP gelegt werden.
 
+Den letzten Stand kann man [hier](http://martin1991zab.github.io/OnlineCodex2/) finden.
+
 ## Build
 
 Abhängigkeiten (Debianpaketnamen):
