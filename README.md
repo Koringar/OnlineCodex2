@@ -4,9 +4,13 @@ Hier soll der neue Online Codex entstehen.
 
 ## Entwicklerhinweise
 
-- Bitte eigenen Branch anlegen die Änderungen werden dann von mir (Martin) in den master gemergt
-- Bitte keine Projektdateien aus der IDE pushen (siehe .gitignore)/ nur Daten für die lauffähige Anwendung
 - dokumentieren nicht vergessen!
+
+## Test
+
+Zum Testen kann das Projekt in einem Webserver mit aktiven PHP gelegt werden.
+
+Den letzten Stand kann man [hier](http://martin1991zab.github.io/OnlineCodex2/) finden.
 
 ## Build
 
