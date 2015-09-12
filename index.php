@@ -5,7 +5,7 @@ $useCacheManifest = false;
 // END CONFIG
 
 $live = false;
-if($argv[1] <> "make") {
+if(@$argv[1] <> "make") {
   $live = true;
 }
 

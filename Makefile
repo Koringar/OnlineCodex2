@@ -1,34 +1,59 @@
-TARGET = build
+TARGET := build
+
+TOCOPY := css/onlinecode2.css js/onlinecodex2.js \
+	js/libs/jquery/jquery.min.js js/libs/jquery-mobile/jquery.mobile.min.js \
+	js/libs/jquery-mobile/jquery.mobile.min.css
+TOCOMPILE := codex/index.json js/oc2.h.js
+INDEX := index
+CODEX := $(wildcard codex/*.json)
+DIRS := $(TARGET) $(TARGET)/codex $(TARGET)/js $(TARGET)/js/libs \
+	$(TARGET)/js/libs/jquery $(TARGET)/js/libs/jquery-mobile \
+	$(TARGET)/js/libs/jquery-mobile/images $(TARGET)/css
+
+#erzeugt die Ziele	
+TOCOPYTARGET := $(addprefix $(TARGET)/, $(TOCOPY))
+TOCOMPILETARGET := $(addprefix $(TARGET)/, $(TOCOMPILE))
+INDEXTARGET := $(addsuffix .html, $(addprefix $(TARGET)/, $(INDEX)))
+CODEXTARGET := $(addprefix $(TARGET)/, $(CODEX))
+	
+ifeq ($(OS), Windows_NT)
+  RM := rmdir
+  CP := xcopy
+else
+  RM := rm -rf
+  CP := cp
+endif
 
 .PHONY: all
-all: checkCodexJson $(TARGET) $(TARGET)/index.html codex js css
+all: $(TOCOMPILETARGET) $(TOCOPYTARGET) $(INDEXTARGET) $(CODEXTARGET)
 
-$(TARGET):
-	mkdir -p $(TARGET)
+$(INDEXTARGET): $(addsuffix .php,$(INDEX)) | $(TARGET)
+	php $< make > $@.html
 
-$(TARGET)/index.html:
-	php index.php make > $(TARGET)/index.html
-
-.PHONY: codex
-codex:
-	mkdir -p $(TARGET)/codex
-	php codex/index.json.php > $(TARGET)/codex/index.json
-	for file in codex/*.json; do \
-	  php helper.php minJson $$file $(TARGET)/$$file ;\
+$(TOCOMPILETARGET): | $(TARGET)
+	for i in $(TOCOMPILE); do \
+	  php $$i.php make > $(addprefix $(TARGET)/, $$i) ; \
 	done
 
-.PHONY: js
-js:
-	cp -r js $(TARGET)/
+$(CODEXTARGET): | $(TARGET)
+	for i in $(CODEX); do \
+	  php helper.php minJson $$i $(addprefix $(TARGET)/, $$i) ;\
+	done
 
-.PHONY: css
-css:
-	cp -r css $(TARGET)/
+$(TOCOPYTARGET): | $(TARGET)
+	for i in $(TOCOPY); do \
+	  $(CP) $$i $(addprefix $(TARGET)/, $$i) ; \
+	done
 
+$(TARGET):
+	for i in $(DIRS); do \
+	  mkdir $$i ; \
+	done
+	
 .PHONY: clean
 clean:
-	rm -rf $(TARGET)
+	$(RM) $(TARGET)
 
-.PHONY: checkCodexJson
-checkCodexJson:
-	 php helper.php checkCodexJson
+.PHONY: checkJSON
+checkJSON:
+	php helper.php checkCodexJson
