@@ -1,56 +1,67 @@
 <?xml version="1.0"?>
 <project name="OnlineCodex2" default="completeBuild">
-   <property file="build.properties"/>
-   
-   <target name="completeBuild" depends="checkSource, clean,createFiles,buildFiles,copyCSS,copyJS">
-   </target>
-   
-   <target name="checkSource">
-       <echo>Check JSON</echo>
-       <exec executable="${phpCommand}" logError="true" failonerror="true">
-        <arg value="${basedir}/helper.php"/>
-        <arg value="checkCodexJson"/>
-       </exec>
-   </target>
-   
-   <target name="clean">
-      <echo>Clean BuildDir "${builddir}"</echo>
-      <delete dir="${builddir}"/>
-   </target>
-   
-   <target name="createFiles">
-       <echo>Create BuildDir "${builddir}"</echo>
-       <mkdir dir="${builddir}"/>
-       <mkdir dir="${builddir}/codex"/>
-   </target>
-   
-   <target name="buildFiles">
-       <echo>Build Index</echo>
-       <exec executable="${phpCommand}" logError="true" failonerror="true" output="${builddir}/index.html">
-        <arg value="${basedir}/index.php"/>
-        <arg value="make"/>
-       </exec>
-       <echo>Build JSON</echo>
-       <exec executable="${phpCommand}" logError="true" failonerror="true" output="${builddir}/codex/index.json">
-        <arg value="${basedir}/codex/index.json.php"/>
-       </exec>
-       <copy todir="${builddir}/codex">
-        <fileset dir="${basedir}/codex">
-            <include name="**/*.json"/>
-        </fileset>
-       </copy>
-   </target>
-   
-   <target name="copyCSS">
-       <copy todir="${builddir}/css">
-        <fileset dir="${basedir}/css"/>
-       </copy>
-   </target>
-   
-   <target name="copyJS">
-       <copy todir="${builddir}/js">
-        <fileset dir="${basedir}/js"/>
-       </copy>
-   </target>
+    <property file="build.properties"/>
+    
+    <target name="completeBuild" depends="checkSource, clean, createDirs, buildFiles, copyLibs">
+    </target>
+    
+    <target name="checkSource">
+        <echo>Check JSON</echo>
+        <exec executable="${phpCommand}" logError="true" failonerror="true">
+            <arg value="${basedir}/helper.php"/>
+            <arg value="checkCodexJson"/>
+        </exec>
+    </target>
+    
+    <target name="clean">
+        <echo>Clean BuildDir "${builddir}"</echo>
+        <delete dir="${builddir}"/>
+    </target>
+    
+    <target name="createDirs">
+        <echo>Create BuildDir "${builddir}"</echo>
+        <mkdir dir="${builddir}"/>
+        <mkdir dir="${builddir}/codex"/>
+        <mkdir dir="${builddir}/js"/>
+        <mkdir dir="${builddir}/css"/>
+    </target>
+    
+    <target name="buildFiles">
+        <echo>Build Index</echo>
+        <exec executable="${phpCommand}" logError="true" failonerror="true" output="${builddir}/index.html">
+            <arg value="${basedir}/index.php"/>
+            <arg value="make"/>
+        </exec>
+        <exec executable="${phpCommand}" logError="true" failonerror="true" output="${builddir}/js/oc2.h.js">
+            <arg value="${basedir}/js/oc2.h.js.php"/>
+            <arg value="make"/>
+        </exec>
+        <echo>Build JSON</echo>
+        <exec executable="${phpCommand}" logError="true" failonerror="true" output="${builddir}/codex/index.json">
+            <arg value="${basedir}/codex/index.json.php"/>
+        </exec>
+        <apply executable="${phpCommand}" dest="${builddir}/codex" logError="true" failonerror="true">
+            <arg value="${basedir}/helper.php"/>
+            <arg value="minJson"/>
+            <srcfile />
+            <targetfile />
+        
+            <fileset dir="${basedir}/codex" includes="*.json"/>
+            <mapper type="identity"/>
+        </apply>
+    </target>
+    
+    <target name="copyLibs">
+        <copy todir="${builddir}">
+            <fileset dir="${basedir}">
+                <include name="css/onlinecode2.css"/>
+                <include name="js/onlinecodex2.js"/>
+                <include name="js/libs/jquery/jquery.js"/>
+                <include name="js/libs/jquery-mobile/jquery.mobile.js"/>
+                <include name="js/libs/jquery-mobile/jquery.mobile.css"/>
+                <include name="js/libs/jquery-mobile/images/**"/>
+            </fileset>
+        </copy>
+    </target>
    
 </project>
