@@ -14,7 +14,7 @@ Den letzten Stand kann man [hier](http://martin1991zab.github.io/OnlineCodex2/) 
 
 ## Build
 
-Über Makefile (@Martin1991zab):
+Über Makefile (@Martin1991zab) für Produktiv mit komprimierten Libs:
     Abhängigkeiten (Debianpaketnamen):
     - `make`
     - `php-cli`
@@ -23,7 +23,7 @@ Den letzten Stand kann man [hier](http://martin1991zab.github.io/OnlineCodex2/) 
     - `make` bzw `make all` baut die Anwendung in `./build/`
     - `make clean` löscht dieses Verzeichnis
 
-Über Ant (@Koringar):
+Über Ant (@Koringar) für Entwicklung mit normalen Libs:
     Abhängigkeiten:
     - `ant`
     - `php-cli`
