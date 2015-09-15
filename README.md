@@ -29,7 +29,7 @@ Den letzten Stand kann man [hier](http://martin1991zab.github.io/OnlineCodex2/) 
     - `php-cli`
     
     Properties (build.properties):
-    - Erzeigt eine neue build.properties indem ihr die build.properties.dist kopiert und die Variablen anpasst
+    - Erzeugt eine neue build.properties indem ihr die build.properties.dist kopiert und die Variablen anpasst
     - Hier müsst ihr eure spezifischen Sachen rein machen
     - `builddir`: Ordner in dem ihr das Build erstellen wollt (default build)
     - `phpCommand`: Kommando mit der euer System PHP aufrufen kann (default php)
