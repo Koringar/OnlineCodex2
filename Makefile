@@ -28,7 +28,7 @@ endif
 all: $(TOCOMPILETARGET) $(TOCOPYTARGET) $(INDEXTARGET) $(CODEXTARGET)
 
 $(INDEXTARGET): $(addsuffix .php,$(INDEX)) | $(TARGET)
-	php $< make > $@.html
+	php $< make > $@
 
 $(TOCOMPILETARGET): | $(TARGET)
 	for i in $(TOCOMPILE); do \
