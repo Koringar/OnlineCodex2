@@ -64,7 +64,7 @@
             ]
         },
         {
-            "name": "Loseskontigent",
+            "name": "Loses Kontigent",
             "HQ": [
                 {"min": "0"},
                 {"max": "0"}
