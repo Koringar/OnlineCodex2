@@ -9,16 +9,23 @@
         <script src="js/libs/jquery/jquery<?php echo $live ? '' : '.min' ?>.js"></script>
         <script src="js/libs/jquery-mobile/jquery.mobile<?php echo $live ? '' : '.min' ?>.js"></script>
         <script src="js/onlinecodex2.js"></script>
-        <script src="js/oc2.h.js<?php echo $live ? '.php' : '' ?>"></script>
+        <script src="js/oc2.h.js"></script>
         <script type="text/javascript">
           $(document).ready(function() {
-            // kleiner Test
-            var indexJson = getArmyIndex(<?php echo $live ? 'true' : 'false' ?>);
-            if(console && console.log) {
-              console.log(typeof indexJson);
-              console.log(indexJson);
-            }
+                        
+            initArmeeDialog();
           });
+          
+          function initArmeeDialog(){
+              var indexJson = getArmyIndex();
+              
+              $("#addArmee").append('<ul data-role="listview" data-inset="true"></ul>');
+              $("#addArmee").children("ul").append('<li data-role="list-divider">Wähle eine Armee aus:</li>');
+              for (i = 0; i < indexJson.length; i++) {
+                $("#addArmee").children("ul").append('<li data-icon="false" style="float:none;min-width:200px;"><a href="#">'+indexJson[i].name+'</a></li>');
+                console.log(indexJson[i].file);
+              }
+          }
         </script>
     </head>
     <body>
@@ -40,13 +47,7 @@
                 <div data-role="navbar" data-iconpos="left">
                     <a href="#addArmee" data-rel="popup" data-icon="plus" data-transition="none" data-iconpos="left">Armee</a>
                     <!--  Durch JavaScript und JSon ersetzen-->
-                    <div data-role="popup" id="addArmee" data-theme="a">
-                        <ul data-role="listview" data-inset="true">
-                            <li data-icon="false" style="float:none;min-width:200px;"><a href="#">Necrons</a></li>
-                            <li data-icon="false" style="float:none;min-width:200px;"><a href="#">Sternenreich der Tau</a></li>
-                            <li data-icon="false" style="float:none;min-width:200px;"><a href="#">...</a></li>
-                        </ul>
-                    </div>
+                    <div data-role="popup" id="addArmee" data-theme="a"></div>
                     <a href="#addTroop" data-icon="plus" data-iconpos="left">Einheit</a>
                     <div id="summary">Gesamtpunkte: 1008</div>
                 </div><!-- /navbar -->
