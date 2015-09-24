@@ -21,10 +21,10 @@
               
               $("#addArmee").append('<ul data-role="listview" data-inset="true"></ul>');
               $("#addArmee").children("ul").append('<li data-role="list-divider">Wähle eine Armee aus:</li>');
-              for (i = 0; i < indexJson.length; i++) {
-                $("#addArmee").children("ul").append('<li data-icon="false" style="float:none;min-width:200px;"><a href="#">'+indexJson[i].name+'</a></li>');
-                console.log(indexJson[i].file);
-              }
+              $.each(indexJson, function (file, name) {
+                $("#addArmee").children("ul").append('<li data-icon="false" style="float:none;min-width:200px;"><a href="#">'+name+'</a></li>');
+                console.log(file);
+              });
           }
         </script>
     </head>
