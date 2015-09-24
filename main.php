@@ -11,21 +11,9 @@
         <script src="js/onlinecodex2.js"></script>
         <script src="js/oc2.h.js"></script>
         <script type="text/javascript">
-          $(document).ready(function() {
-                        
-            initArmeeDialog();
-          });
-          
-          function initArmeeDialog(){
-              var indexJson = getArmyIndex();
-              
-              $("#addArmee").append('<ul data-role="listview" data-inset="true"></ul>');
-              $("#addArmee").children("ul").append('<li data-role="list-divider">Wähle eine Armee aus:</li>');
-              $.each(indexJson, function (file, name) {
-                $("#addArmee").children("ul").append('<li data-icon="false" style="float:none;min-width:200px;"><a href="#">'+name+'</a></li>');
-                console.log(file);
-              });
-          }
+            $("#addArmee").ready(function() {
+                initArmeeDialog();
+            });
         </script>
     </head>
     <body>
@@ -47,7 +35,11 @@
                 <div data-role="navbar" data-iconpos="left">
                     <a href="#addArmee" data-rel="popup" data-icon="plus" data-transition="none" data-iconpos="left">Armee</a>
                     <!--  Durch JavaScript und JSon ersetzen-->
-                    <div data-role="popup" id="addArmee" data-theme="a"></div>
+                    <div data-role="popup" id="addArmee" data-theme="a">
+                        <ul data-role="listview" data-inset="true">
+                            <li data-role="list-divider">Wähle eine Armee aus:</li>
+                        </ul>
+                    </div>
                     <a href="#addTroop" data-icon="plus" data-iconpos="left">Einheit</a>
                     <div id="summary">Gesamtpunkte: 1008</div>
                 </div><!-- /navbar -->
