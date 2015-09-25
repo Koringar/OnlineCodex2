@@ -86,7 +86,14 @@ function minJson($infile, $outfile) {
 }
 
 function minJsCss($infile, $outfile) {
-  $content = file_get_contents($infile);
-  // TODO
-  file_put_contents($outfile, $content);
+  $infileArray = explode('.', $infile);
+  $ext = $infileArray[count($infileArray) - 1];
+  $infileArray[count($infileArray) - 1] = "min";
+  $infileArray[] = $ext;
+  $infile2 = implode('.', $infileArray);
+  if(file_exists($infile2)) {
+    copy($infile2, $outfile);
+  } else {
+    copy($infile, $outfile);
+  }
 }
