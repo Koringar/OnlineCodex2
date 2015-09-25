@@ -15,7 +15,7 @@ TOCOPYTARGET := $(addprefix $(TARGET)/, $(TOCOPY))
 TOCOMPILETARGET := $(addprefix $(TARGET)/, $(TOCOMPILE))
 INDEXTARGET := $(addsuffix .html, $(addprefix $(TARGET)/, $(INDEX)))
 CODEXTARGET := $(addprefix $(TARGET)/, $(CODEX))
-	
+
 ifeq ($(OS), Windows_NT)
   RM := rmdir
   CP := xcopy
@@ -30,11 +30,11 @@ endif
 all: $(TOCOMPILETARGET) $(TOCOPYTARGET) $(INDEXTARGET) $(CODEXTARGET)
 
 $(INDEXTARGET): $(addsuffix .php,$(INDEX)) | $(TARGET)
-	$(PHP) $< make > $@
+	$(PHP) $< > $@
 
 $(TOCOMPILETARGET): | $(TARGET)
 	for i in $(TOCOMPILE); do \
-	  $(PHP) $$i.php make > $(addprefix $(TARGET)/, $$i) ; \
+	  $(PHP) $$i.php > $(addprefix $(TARGET)/, $$i) ; \
 	done
 
 $(CODEXTARGET): | $(TARGET)

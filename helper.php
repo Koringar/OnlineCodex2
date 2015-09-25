@@ -14,6 +14,6 @@ switch ($action) {
     minJsCss($argv[2], $argv[3]);
     break;
   default:
-    echo "checkCodexJson minJson";
+    echo "Options: checkCodexJson minJson minJsCss";
     break;
 }
