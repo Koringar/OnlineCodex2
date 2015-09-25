@@ -33,6 +33,7 @@
         </exec>
         <exec executable="${phpCommand}" logError="true" failonerror="true" output="${builddir}/js/oc2.h.js">
             <arg value="${basedir}/js/oc2.h.js.php"/>
+            <arg value="make"/>
         </exec>
         <echo>Build JSON</echo>
         <exec executable="${phpCommand}" logError="true" failonerror="true" output="${builddir}/codex/index.json">

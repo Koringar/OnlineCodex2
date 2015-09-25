@@ -14,7 +14,7 @@ Den letzten Stand kann man [hier](http://martin1991zab.github.io/OnlineCodex2/) 
 
 ## Build
 
-### Über Makefile (@Martin1991zab) für Produktiv mit komprimierten Libs:
+### Über Makefile (@Martin1991zab) für Produktion mit komprimierten Libs:
 Abhängigkeiten (Debianpaketnamen):
 - `make`
 - `php-cli`
