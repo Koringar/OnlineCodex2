@@ -1,8 +1,8 @@
 TARGET := build
 
 TOCOPY := css/onlinecode2.css js/onlinecodex2.js \
-	js/libs/jquery/jquery.min.js js/libs/jquery-mobile/jquery.mobile.min.js \
-	js/libs/jquery-mobile/jquery.mobile.min.css
+	js/libs/jquery/jquery.js js/libs/jquery-mobile/jquery.mobile.js \
+	js/libs/jquery-mobile/jquery.mobile.css
 TOCOMPILE := codex/index.json js/oc2.h.js
 INDEX := index
 CODEX := $(wildcard codex/*.json)
@@ -10,7 +10,7 @@ DIRS := $(TARGET) $(TARGET)/codex $(TARGET)/js $(TARGET)/js/libs \
 	$(TARGET)/js/libs/jquery $(TARGET)/js/libs/jquery-mobile \
 	$(TARGET)/js/libs/jquery-mobile/images $(TARGET)/css
 
-#erzeugt die Ziele	
+#erzeugt die Ziele
 TOCOPYTARGET := $(addprefix $(TARGET)/, $(TOCOPY))
 TOCOMPILETARGET := $(addprefix $(TARGET)/, $(TOCOMPILE))
 INDEXTARGET := $(addsuffix .html, $(addprefix $(TARGET)/, $(INDEX)))
@@ -19,30 +19,32 @@ CODEXTARGET := $(addprefix $(TARGET)/, $(CODEX))
 ifeq ($(OS), Windows_NT)
   RM := rmdir
   CP := xcopy
+  PHP := php.exe
 else
   RM := rm -rf
   CP := cp
+  PHP := php
 endif
 
 .PHONY: all
 all: $(TOCOMPILETARGET) $(TOCOPYTARGET) $(INDEXTARGET) $(CODEXTARGET)
 
 $(INDEXTARGET): $(addsuffix .php,$(INDEX)) | $(TARGET)
-	php $< make > $@
+	$(PHP) $< make > $@
 
 $(TOCOMPILETARGET): | $(TARGET)
 	for i in $(TOCOMPILE); do \
-	  php $$i.php make > $(addprefix $(TARGET)/, $$i) ; \
+	  $(PHP) $$i.php make > $(addprefix $(TARGET)/, $$i) ; \
 	done
 
 $(CODEXTARGET): | $(TARGET)
 	for i in $(CODEX); do \
-	  php helper.php minJson $$i $(addprefix $(TARGET)/, $$i) ;\
+	  $(PHP) helper.php minJson $$i $(addprefix $(TARGET)/, $$i) ;\
 	done
 
 $(TOCOPYTARGET): | $(TARGET)
 	for i in $(TOCOPY); do \
-	  $(CP) $$i $(addprefix $(TARGET)/, $$i) ; \
+	  $(PHP) helper.php minJsCss $$i $(addprefix $(TARGET)/, $$i) ; \
 	done
 
 $(TARGET):
@@ -54,6 +56,6 @@ $(TARGET):
 clean:
 	$(RM) $(TARGET)
 
-.PHONY: checkJSON
-checkJSON:
-	php helper.php checkCodexJson
+.PHONY: checkCodexJson
+checkCodexJson:
+	$(PHP) helper.php checkCodexJson
