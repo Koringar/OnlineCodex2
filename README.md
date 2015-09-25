@@ -14,26 +14,26 @@ Den letzten Stand kann man [hier](http://martin1991zab.github.io/OnlineCodex2/) 
 
 ## Build
 
-Über Makefile (@Martin1991zab) für Produktiv mit komprimierten Libs:
-    Abhängigkeiten (Debianpaketnamen):
-    - `make`
-    - `php-cli`
-    
-    Zu verwendene Buildtargets:
-    - `make` bzw `make all` baut die Anwendung in `./build/`
-    - `make clean` löscht dieses Verzeichnis
+### Über Makefile (@Martin1991zab) für Produktion mit komprimierten Libs:
+Abhängigkeiten (Debianpaketnamen):
+- `make`
+- `php-cli`
 
-Über Ant (@Koringar) für Entwicklung mit normalen Libs:
-    Abhängigkeiten:
-    - `ant`
-    - `php-cli`
-    
-    Properties (build.properties):
-    - Erzeugt eine neue build.properties indem ihr die build.properties.dist kopiert und die Variablen anpasst
-    - Hier müsst ihr eure spezifischen Sachen rein machen
-    - `builddir`: Ordner in dem ihr das Build erstellen wollt (default build)
-    - `phpCommand`: Kommando mit der euer System PHP aufrufen kann (default php)
+Zu verwendene Buildtargets:
+- `make` bzw `make all` baut die Anwendung in `./build/`
+- `make clean` löscht dieses Verzeichnis
 
-    Zu verwendene Buildtargets:
-    - `completeBuild` baut die Anwendung in `builddir`
-    - `clean` löscht dieses Verzeichnis
+### Über Ant (@Koringar) für Entwicklung mit normalen Libs:
+Abhängigkeiten:
+- `ant`
+- `php-cli`
+
+Properties (build.properties):
+- Erzeugt eine neue build.properties indem ihr die build.properties.dist kopiert und die Variablen anpasst
+- Hier müsst ihr eure spezifischen Sachen rein machen
+- `builddir`: Ordner in dem ihr das Build erstellen wollt (default build)
+- `phpCommand`: Kommando mit der euer System PHP aufrufen kann (default php)
+
+Zu verwendene Buildtargets:
+- `completeBuild` baut die Anwendung in `builddir`
+- `clean` löscht dieses Verzeichnis
