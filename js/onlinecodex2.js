@@ -93,7 +93,7 @@ function initOptionDialog(){
  * 
  * @param {Object} armeeJson: Das geladene JSON Object
  */
-function iniUnitDialog(armeeJson){
+function initUnitDialog(armeeJson){
     //Fülle den Dialog mit den Elementen
     $("div[data-role='content']").prepend('<div data-role="popup" id="addUnit' + armeeJson.name + '" class="ui-popup ui-body-a ui-overlay-shadow ui-corner-all"></div>');
     //Inhalt setzen
@@ -117,7 +117,7 @@ function iniUnitDialog(armeeJson){
  * @param {String} UnID: Eindeutige ID
  * @param {String} ArmeeName: Name der Armee
  */
-function iniArmeeContainer(UnID, ArmeeName){
+function initArmeeContainer(UnID, ArmeeName){
     //Der Container
     $("div[data-role='content']").append('<div id="' + UnID + '" class="armee"></div>');
     //Anzeige des Name
@@ -179,11 +179,11 @@ function loadArmee(file){
     
     //Die Daten des Codex werden nur einmal gespeichert
     if(codexNotExist){
-        iniUnitDialog(armeeJson);
+        initUnitDialog(armeeJson);
     }
     
     //Initialisere Armeeabschnitt in Body
-    iniArmeeContainer(armeeId, armeeJson.name);
+    initArmeeContainer(armeeId, armeeJson.name);
 }
 
 /*
