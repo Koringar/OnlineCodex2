@@ -4,8 +4,6 @@
  * and open the template in the editor.
  */
 
-var defaultFormations = new Array(); // Globale Variable für die Default Formationen
-var allLoadedJson = new Array(); // Globale Variablen für alle JSON Object vom Codex
 // TODO: Vielleicht doch lieber in window.sessionStorage
 var allSelectetArmees = new Array(); // Globale Variable für alle ausgewählten Armeen
 
@@ -48,12 +46,28 @@ function get(uri, callback) {
 }
 
 /*
+ * Gibt das JSON Oject der Default Formation (Haup-, Verbündenten- und Loses Kontigent) wieder.
+ * 
+ * @returns {@var;callback|Boolean|data}
+ */
+function getDefaultFormationJson(){
+    return get("codex/default_formations.json");
+}
+
+/*
+ * Gibt das JSON Object der Armee wieder
+ * 
+ * @param {type} armee: Armee die man will
+ * @returns {@var;callback|Boolean|data}
+ */
+function getArmeeJson(armee){
+    return get("codex/" + armee);
+}
+
+/*
  * Initialisert den Dialog für die verschiedenen Armeen
  */
 function initArmeeDialog(){
-    //Hole die Default Formationen, für die spätere Verarbeitung
-    defaultFormations = get("codex/default_formations.json");
-    
     //Hole alle Armeen
     var indexJson = getArmyIndex();
     //Fülle den Dialog mit den Elementen
@@ -94,21 +108,24 @@ function initOptionDialog(){
  * @param {Object} armeeJson: Das geladene JSON Object
  */
 function initUnitDialog(armeeJson){
-    //Fülle den Dialog mit den Elementen
-    $("div[data-role='content']").prepend('<div data-role="popup" id="addUnit' + armeeJson.name + '" class="ui-popup ui-body-a ui-overlay-shadow ui-corner-all"></div>');
-    //Inhalt setzen
-    $('div[id="addUnit' + armeeJson.name + '"]').append('<div class="unitPopup"></div>');
-    $('div[id="addUnit' + armeeJson.name + '"] > div:first-child').append('<div>' + armeeJson.name + '</div><div class="unitGroups"></div>');
-    $.each(armeeJson.groups, function (group, array) {
-        //TODO: Die Gruppenbezeichnungen aus einem NLS oder so ziehen
-        $('div[id="addUnit' + armeeJson.name + '"] div[class="unitGroups"]').append('<div class="' + group + '"><div><div>' + group + '</div><div>Punkte</div></div></div>');
-        $.each(array, function (counter, unit) {
-            $('div[id="addUnit' + armeeJson.name + '"] div[class="' + group + '"]').append("<div><div>" + unit.name + "</div><div>" + unit.cost + "</div></div>");
+    //Prüfe ob die Daten zum Einheiten Dialog schon existierren, die muss es nur einmal geben
+    if($('div[id="addUnit' + armeeJson.name + '"]').length === 0){
+        //Fülle den Dialog mit den Elementen
+        $("div[data-role='content']").prepend('<div data-role="popup" id="addUnit' + armeeJson.name + '" class="ui-popup ui-body-a ui-overlay-shadow ui-corner-all"></div>');
+        //Inhalt setzen
+        $('div[id="addUnit' + armeeJson.name + '"]').append('<div class="unitPopup"></div>');
+        $('div[id="addUnit' + armeeJson.name + '"] > div:first-child').append('<div>' + armeeJson.name + '</div><div class="unitGroups"></div>');
+        $.each(armeeJson.groups, function (group, array) {
+            //TODO: Die Gruppenbezeichnungen aus einem NLS oder so ziehen
+            $('div[id="addUnit' + armeeJson.name + '"] div[class="unitGroups"]').append('<div class="' + group + '"><div><div>' + group + '</div><div>Punkte</div></div></div>');
+            $.each(array, function (counter, unit) {
+                $('div[id="addUnit' + armeeJson.name + '"] div[class="' + group + '"]').append("<div><div>" + unit.name + "</div><div>" + unit.cost + "</div></div>");
+            });
         });
-    });
-    
-    //Der Popup muss mit seinen Daten nur einmal Initialsiert werden
-    $("#addUnit" + armeeJson.name).popup();
+
+        //Der Popup muss mit seinen Daten nur einmal Initialsiert werden
+        $("#addUnit" + armeeJson.name).popup();
+    }
 }
 
 /*
@@ -117,21 +134,23 @@ function initUnitDialog(armeeJson){
  * @param {String} UnID: Eindeutige ID
  * @param {String} ArmeeName: Name der Armee
  */
-function initArmeeContainer(UnID, ArmeeName){
+function initArmeeContainer(UNID, ArmeeName){
+    var defaultFormations = getDefaultFormationJson();
+    
     //Der Container
-    $("div[data-role='content']").append('<div id="' + UnID + '" class="armee"></div>');
+    $("div[data-role='content']").append('<div id="' + UNID + '" class="armee"></div>');
     //Anzeige des Name
-    $("#" + UnID).append('<div class="armeeName">' + ArmeeName + '</div>');
+    $("#" + UNID).append('<div class="armeeName">' + ArmeeName + '</div>');
     //Anzeige der Formation, die ersten Formation ist das Hauptkontigent ansonsten eben Verbündetenkontigent
-    $("#" + UnID).append('<div class="armeeType">(' + ((allSelectetArmees.length===1)?defaultFormations.formations[0].name:defaultFormations.formations[1].name) + ')</div>');
+    $("#" + UNID).append('<div class="armeeType">(' + ((allSelectetArmees.length===1)?defaultFormations.formations[0].name:defaultFormations.formations[1].name) + ')</div>');
     //Schaltfläche zum ändern der Formation
-    $("#" + UnID).append('<a href="#" class="ui-btn ui-icon-edit ui-btn-icon-notext ui-shadow ui-corner-all" title="anpassen"></a>');
+    $("#" + UNID).append('<a href="#" class="ui-btn ui-icon-edit ui-btn-icon-notext ui-shadow ui-corner-all" title="anpassen"></a>');
     //Für Einheitenauswahl
-    $("#" + UnID).append('<a href="#addUnit' + ArmeeName + '" data-rel="popup" class="ui-btn ui-icon-plus ui-btn-icon-notext ui-shadow ui-corner-all" title="Einheit hinzufügen"></a>');
+    $("#" + UNID).append('<a href="#addUnit' + ArmeeName + '" data-rel="popup" class="ui-btn ui-icon-plus ui-btn-icon-notext ui-shadow ui-corner-all" title="Einheit hinzufügen"></a>');
     //Floating wieder normal
-    $("#" + UnID).append('<div style="clear: both;">');
+    $("#" + UNID).append('<div style="clear: both;">');
     //Für die Punkte der Armee
-    $("#" + UnID).append('<div class="armeeSummary">Gesamtpunkte ' + ArmeeName + ': 0</div>');
+    $("#" + UNID).append('<div class="armeeSummary">Gesamtpunkte ' + ArmeeName + ': 0</div>');
     
     //TODO: Anpassen Popup/Dialog initialisieren
 }
@@ -150,40 +169,22 @@ function renderSelectetArmees(){
  * @param {String} file: JSON File
  */
 function loadArmee(file){
-    var date = new Date(); // Für die Millisekunden, für Eindeutigkeit
-    
-    var codexNotExist = false;
-    var armeeJson;
-    //Prüfe vorher ob nicht schon geladen
-    for (var i = 0; i < allLoadedJson.length; ++i) {
-        console.log(allLoadedJson[i]);
-        if(allLoadedJson[i].file === file){
-            armeeJson = allLoadedJson[i];
-        }
-    }
-    //Lade JSON und speicher sie Global
-    if(armeeJson === null || armeeJson === undefined){
-        armeeJson = get("codex/"+file);
-        armeeJson.file = file;
-        allLoadedJson.push(armeeJson);
-        codexNotExist = true;
-    }
-    /*
-     * Die selektierten Armeen erweitern,
-     * die Auswahl Eindeutig machen damit die
-     * besser Erweitert werden kann
-     */
+    // Für die Millisekunden, für Eindeutigkeit
+    var date = new Date();
+    //Lade JSON
+    var armeeJson = getArmeeJson(file);
+    //Die Auswahl Eindeutig machen damit die besser auf sie zugegriffen werden kann
     var armeeId = armeeJson.name + date.getTime();
-    //TODO: Eher ein Object erzeugen mit dem Wert
-    allSelectetArmees.push(armeeId);
+    //Speicher die UNID und den Armee Name in ein Object, in diesem werden dann die Auswahlen gesetzt
+    var newArmee = new Object();
+    newArmee.UNID = armeeId;
+    newArmee.Name = armeeJson.name;
+    allSelectetArmees.push(newArmee);
     
-    //Die Daten des Codex werden nur einmal gespeichert
-    if(codexNotExist){
-        initUnitDialog(armeeJson);
-    }
-    
+    //Initialisier den Dialog für die Einheitenauswahl
+    initUnitDialog(armeeJson);
     //Initialisere Armeeabschnitt in Body
-    initArmeeContainer(armeeId, armeeJson.name);
+    initArmeeContainer(newArmee.UNID, newArmee.Name);
 }
 
 /*
