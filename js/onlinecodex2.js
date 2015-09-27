@@ -72,6 +72,7 @@ function initArmeeDialog(){
     var indexJson = getArmyIndex();
     //Fülle den Dialog mit den Elementen
     $("div[data-role='navbar']").prepend('<div data-role="popup" id="addArmee" class="ui-popup ui-body-a ui-overlay-shadow ui-corner-all"></div>');
+    $("#addArmee").append('<a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>');
     $("#addArmee").append('<ul data-role="listview" class="ui-grid-solo ui-listview"></ul>');
     $("#addArmee ul").append('<li data-role="list-divider" class="ui-block-a ui-li-divider ui-bar-inherit ui-first-child ui-last-child" role="heading">Wähle eine Armee aus:</li>');
     $.each(indexJson, function (file, name) {
@@ -112,9 +113,10 @@ function initUnitDialog(armeeJson){
     if($('div[id="addUnit' + armeeJson.name + '"]').length === 0){
         //Fülle den Dialog mit den Elementen
         $("div[data-role='content']").prepend('<div data-role="popup" id="addUnit' + armeeJson.name + '" class="ui-popup ui-body-a ui-overlay-shadow ui-corner-all"></div>');
+        $('div[id="addUnit' + armeeJson.name + '"]').append('<a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>');
         //Inhalt setzen
         $('div[id="addUnit' + armeeJson.name + '"]').append('<div class="unitPopup"></div>');
-        $('div[id="addUnit' + armeeJson.name + '"] > div:first-child').append('<div>' + armeeJson.name + '</div><div class="unitGroups"></div>');
+        $('div[id="addUnit' + armeeJson.name + '"] > div:nth-child(2)').append('<div class="center">' + armeeJson.name + '</div><div class="unitGroups"></div>');
         $.each(armeeJson.groups, function (group, array) {
             //TODO: Die Gruppenbezeichnungen aus einem NLS oder so ziehen
             $('div[id="addUnit' + armeeJson.name + '"] div[class="unitGroups"]').append('<div class="' + group + '"><div><div>' + group + '</div><div>Punkte</div></div></div>');

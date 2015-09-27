@@ -56,11 +56,14 @@ div.armeeSummary{
 #addArmee li{
     float: none;
 }
+.center{
+    text-align: center;
+}
 /* Das ganze Popup wird erst als Flexbox definiert und der Inhalt dann als Table */
 div.unitPopup{
     overflow-y: scroll;
-    max-height: 100vh;
-    max-width: 100vw;
+    max-height: 95vh;
+    max-width: 99vw;
 }
 div.unitGroups{
     display: flex;
@@ -69,6 +72,7 @@ div.unitGroups{
 div.unitGroups div{
     display: table;
     margin: .2em;
+    width: 21em;
 }
 div.unitGroups div div{
     display: table-row;
@@ -78,4 +82,5 @@ div.unitGroups div div div{
 }
 div.unitGroups div div div:last-child{
    text-align: right;
+   width: 10%;
 }
