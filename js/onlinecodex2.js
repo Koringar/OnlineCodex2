@@ -159,7 +159,7 @@ function initArmeeContainer(UNID, ArmeeName){
  * Rendert beim neuladen der Seite alles wieder
  */
 function renderSelectetArmees(){
-    
+    console.log("Ausgewählte Armeen: " + allSelectetArmees.length);
 }
 
 /*
