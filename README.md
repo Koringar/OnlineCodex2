@@ -14,6 +14,9 @@ Den letzten Stand kann man [hier](http://martin1991zab.github.io/OnlineCodex2/) 
 
 ## Build
 
+### Allgemein
+- Kopiere `config.php.dist` als `config.php` um die Konfiguration anzupassen
+
 ### Über Makefile (@Martin1991zab) für Produktion mit komprimierten Libs:
 Abhängigkeiten (Debianpaketnamen):
 - `make`

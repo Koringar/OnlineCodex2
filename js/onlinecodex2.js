@@ -47,6 +47,10 @@ function get(uri, callback) {
     }
 }
 
+function getArmyIndex() {
+  return get("codex/index.json");
+}
+
 /*
  * Initialisert den Dialog für die verschiedenen Armeen
  */

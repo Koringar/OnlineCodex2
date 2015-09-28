@@ -10,3 +10,4 @@ nb-configuration.xml
 .directory
 build.properties
 run.cmd
+config.php

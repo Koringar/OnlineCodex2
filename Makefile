@@ -3,7 +3,7 @@ TARGET := build
 TOCOPY := css/onlinecode2.css js/onlinecodex2.js \
 	js/libs/jquery/jquery.js js/libs/jquery-mobile/jquery.mobile.js \
 	js/libs/jquery-mobile/jquery.mobile.css
-TOCOMPILE := codex/index.json js/oc2.h.js
+TOCOMPILE := codex/index.json
 INDEX := index
 CODEX := $(wildcard codex/*.json)
 DIRS := $(TARGET) $(TARGET)/codex $(TARGET)/js $(TARGET)/js/libs \
@@ -15,6 +15,7 @@ TOCOPYTARGET := $(addprefix $(TARGET)/, $(TOCOPY))
 TOCOMPILETARGET := $(addprefix $(TARGET)/, $(TOCOMPILE))
 INDEXTARGET := $(addsuffix .html, $(addprefix $(TARGET)/, $(INDEX)))
 CODEXTARGET := $(addprefix $(TARGET)/, $(CODEX))
+CACHEMANIFEST := $(addprefix $(TARGET)/, cache.manifest)
 
 ifeq ($(OS), Windows_NT)
   RM := rmdir
@@ -27,7 +28,7 @@ else
 endif
 
 .PHONY: all
-all: $(TOCOMPILETARGET) $(TOCOPYTARGET) $(INDEXTARGET) $(CODEXTARGET)
+all: $(TOCOMPILETARGET) $(TOCOPYTARGET) $(INDEXTARGET) $(CODEXTARGET) $(CACHEMANIFEST)
 
 $(INDEXTARGET): $(addsuffix .php,$(INDEX)) | $(TARGET)
 	$(PHP) $< > $@
@@ -46,6 +47,9 @@ $(TOCOPYTARGET): | $(TARGET)
 	for i in $(TOCOPY); do \
 	  $(PHP) helper.php minJsCss $$i $(addprefix $(TARGET)/, $$i) ; \
 	done
+
+$(CACHEMANIFEST): | $(TARGET)
+	$(PHP) helper.php genCacheManifest $(CACHEMANIFEST) $(INDEXTARGET) $(TOCOMPILETARGET) $(TOCOPYTARGET)
 
 $(TARGET):
 	for i in $(DIRS); do \
