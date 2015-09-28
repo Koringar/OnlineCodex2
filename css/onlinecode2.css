@@ -1,49 +1,81 @@
 #summary{
-	position: absolute;
-	right: .5em;
-	top: 3.6em;
+    position: absolute;
+    right: .5em;
+    top: 3.6em;
 }
 div.armeeName{
-	font-weight: bold;
-	font-size: large;
-	margin-top: 0.3em;
-	float: left;
+    font-weight: bold;
+    font-size: large;
+    margin-top: 0.3em;
+    float: left;
+}
+div.armeeType{
+    font-size: large;
+    margin-top: 0.3em;
+    float: left;
 }
 div.group{
-	float: left;
-	width: 22.3em;
-	margin-top: 0.3em;
+    float: left;
+    width: 22.3em;
+    margin-top: 0.3em;
 }
 div.group .ui-block-a{
-	width: 65%;
+    width: 65%;
 }
 div.group .ui-block-b{
-	width: 25%;
+    width: 25%;
 }
 div.group .ui-grid-b .ui-block-c{
-	width: 10%;
+    width: 10%;
 }
-div button.ui-icon-edit{
-	margin: 0;
-	background: transparent;
-	border: transparent;
-	box-shadow: transparent 0 0 0;
+.ui-content a.ui-icon-edit, .ui-content a.ui-icon-plus{
+    margin: 0;
+    background: transparent;
+    border: transparent;
+    box-shadow: transparent 0 0 0;
+    float: left;
 }
 div.groupName{
-	font-weight: bold;
-	font-size: large;
+    font-weight: bold;
+    font-size: large;
 }
 div.selection{
-	margin-top: 0.3em;
+    margin-top: 0.3em;
 }
 div.selectionName{
-	font-weight: bold;
-	font-style: italic;
+    font-weight: bold;
+    font-style: italic;
 }
 div.groupPoints, div.selectionPoints{
-	text-align: right;
+    text-align: right;
 }
-#armeeSummary{
-	clear: both;
-	text-align: right;
+div.armeeSummary{
+    clear: both;
+    text-align: right;
+}
+#addArmee li{
+    float: none;
+}
+/* Das ganze Popup wird erst als Flexbox definiert und der Inhalt dann als Table */
+div.unitPopup{
+    overflow-y: scroll;
+    max-height: 100vh;
+    max-width: 100vw;
+}
+div.unitGroups{
+    display: flex;
+    flex-wrap: wrap;
+}
+div.unitGroups div{
+    display: table;
+    margin: .2em;
+}
+div.unitGroups div div{
+    display: table-row;
+}
+div.unitGroups div div div{
+    display: table-cell;
+}
+div.unitGroups div div div:last-child{
+   text-align: right;
 }
