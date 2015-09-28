@@ -97,3 +97,18 @@ function minJsCss($infile, $outfile) {
     copy($infile, $outfile);
   }
 }
+
+function genCacheManifest($vars) {
+  array_shift($vars); // dateiname raus
+  array_shift($vars); // funktionsname raus
+  $manifestName = array_shift($vars);
+  $manifest = array();
+  $manifest[] = "CACHE MANIFEST";
+  $manifest[] = "# " . date("Y.m.d H:i:s");
+  $manifest[] = "CACHE:";
+  foreach ($vars as $file) {
+    $manifest[] = $file;
+  }
+  $manifest[] = "";
+  file_put_contents($manifestName, implode("\n", $manifest));
+}

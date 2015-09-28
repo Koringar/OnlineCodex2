@@ -1,0 +1,6 @@
+<?php
+
+// In config.php.dist keine Änderungen vornemen!
+// Bitte kopiere diese Datei als config.php un ändere dort
+
+$useCacheManifest = false;

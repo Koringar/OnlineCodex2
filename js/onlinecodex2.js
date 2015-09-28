@@ -45,6 +45,10 @@ function get(uri, callback) {
     }
 }
 
+function getArmyIndex() {
+  return get("codex/index.json");
+}
+
 /*
  * Gibt das JSON Oject der Default Formation (Haup-, Verbündenten- und Loses Kontigent) wieder.
  * 
