@@ -1,6 +1,12 @@
 <?php
 
 require './helper.lib.php';
+
+include 'config.php.dist';
+if (file_exists('config.php')) {
+  include 'config.php';
+}
+
 $action = $argv[1];
 
 switch ($action) {
@@ -13,7 +19,12 @@ switch ($action) {
   case "minJsCss":
     minJsCss($argv[2], $argv[3]);
     break;
+  case "genCacheManifest":
+    if($useCacheManifest) {
+      genCacheManifest($argv);
+    }
+    break;
   default:
-    echo "checkCodexJson minJson";
+    echo "Options: checkCodexJson minJson minJsCss";
     break;
 }

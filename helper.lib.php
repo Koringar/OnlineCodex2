@@ -86,7 +86,29 @@ function minJson($infile, $outfile) {
 }
 
 function minJsCss($infile, $outfile) {
-  $content = file_get_contents($infile);
-  // TODO
-  file_put_contents($outfile, $content);
+  $infileArray = explode('.', $infile);
+  $ext = $infileArray[count($infileArray) - 1];
+  $infileArray[count($infileArray) - 1] = "min";
+  $infileArray[] = $ext;
+  $infile2 = implode('.', $infileArray);
+  if(file_exists($infile2)) {
+    copy($infile2, $outfile);
+  } else {
+    copy($infile, $outfile);
+  }
+}
+
+function genCacheManifest($vars) {
+  array_shift($vars); // dateiname raus
+  array_shift($vars); // funktionsname raus
+  $manifestName = array_shift($vars);
+  $manifest = array();
+  $manifest[] = "CACHE MANIFEST";
+  $manifest[] = "# " . date("Y.m.d H:i:s");
+  $manifest[] = "CACHE:";
+  foreach ($vars as $file) {
+    $manifest[] = $file;
+  }
+  $manifest[] = "";
+  file_put_contents($manifestName, implode("\n", $manifest));
 }
