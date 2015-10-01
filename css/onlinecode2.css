@@ -69,18 +69,20 @@ div.unitGroups{
     display: flex;
     flex-wrap: wrap;
 }
-div.unitGroups div{
+.dis_table{
     display: table;
     margin: .2em;
     width: 21em;
 }
-div.unitGroups div div{
+.dis_table_row{
     display: table-row;
 }
-div.unitGroups div div div{
+.dis_table_row div{
     display: table-cell;
+    text-align: left;
+    font-weight: normal;
 }
-div.unitGroups div div div:last-child{
+.dis_table_row div:last-child{
    text-align: right;
    width: 10%;
 }

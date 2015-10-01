@@ -119,14 +119,20 @@ function initUnitDialog(armeeJson){
         $('div[id="addUnit' + armeeJson.name + '"] > div:nth-child(2)').append('<div class="center">' + armeeJson.name + '</div><div class="unitGroups"></div>');
         $.each(armeeJson.groups, function (group, array) {
             //TODO: Die Gruppenbezeichnungen aus einem NLS oder so ziehen
-            $('div[id="addUnit' + armeeJson.name + '"] div[class="unitGroups"]').append('<div class="' + group + '"><div><div>' + group + '</div><div>Punkte</div></div></div>');
+            $('div[id="addUnit' + armeeJson.name + '"] div[class="unitGroups"]').append('<div class="dis_table ' + group + '"><div class="dis_table_row"><div>' + group + '</div><div>Punkte</div></div></div>');
             $.each(array, function (counter, unit) {
-                $('div[id="addUnit' + armeeJson.name + '"] div[class="' + group + '"]').append("<div><div>" + unit.name + "</div><div>" + unit.cost + "</div></div>");
+                $('div[id="addUnit' + armeeJson.name + '"] div[class="dis_table ' + group + '"]').append('<a href="#addUnitToArmee" class="ui-btn dis_table_row"><div>' + unit.name + '</div><div>' + unit.cost + '</div></a>');
             });
         });
 
         //Der Popup muss mit seinen Daten nur einmal Initialsiert werden
         $("#addUnit" + armeeJson.name).popup();
+        //Clickevents einfangen und verarbeiten
+        $("#addUnit" + armeeJson.name + " a[href=#addUnitToArmee]").click(function() {
+            //TODO: Auslöser noch rausgfinden
+            addUnit($(this), this);
+            //$("#addArmee").popup("close");
+        });
     }
 }
 
@@ -195,4 +201,12 @@ function loadArmee(file){
  */
 function removeArmee(armee){
     console.log(armee);
+}
+
+function addUnit(container, auslöser){
+    var auswahl = container.children("div:first-child")[0].innerText;
+    var group = container.parent()[0].className.split(' ')[1];
+    var armee;
+    
+    console.log(group + ": " + auswahl);
 }
