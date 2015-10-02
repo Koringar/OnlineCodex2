@@ -14,7 +14,6 @@
         <script src="js/libs/jquery/jquery.js"></script>
         <script src="js/libs/jquery-mobile/jquery.mobile.js"></script>
         <script src="js/onlinecodex2.js"></script>
-        <script src="js/oc2.h.js"></script>
     </head>
     <body>
         <div data-role="page">
