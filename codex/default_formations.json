@@ -4,7 +4,7 @@
     "date": "2015-09-22 20:00",
     "formations": [
         {
-            "name": "Hauptkontigent",
+            "name": "main",
             "HQ": [
                 {"min": "1"},
                 {"max": "2"}
@@ -35,7 +35,7 @@
             ]
         },
         {
-            "name": "Verbündetenkontigent",
+            "name": "ally",
             "HQ": [
                 {"min": "1"},
                 {"max": "1"}
@@ -64,7 +64,7 @@
             ]
         },
         {
-            "name": "Loses Kontigent",
+            "name": "other",
             "HQ": [
                 {"min": "0"},
                 {"max": "0"}

@@ -1,0 +1,23 @@
+{
+    "buttonAddArmyText": "Armee",
+    "buttonAddArmyTitle": "Armee hinzufügen",
+    "popupAddArmyText": "Wähle eine Armee aus",
+    "buttonCloseTitle": "Schließen",
+    "buttonGearTitle": "Einstellungen",
+    "buttonChangeArmeeTitle": "Armee anpassen",
+    "buttonAddUnitTitle": "Einheit hinzufügen",
+    "buttonChangeUnitTitle": "Einheit anpassen",
+    "divArmeeTypeMain": "Hauptkontigent",
+    "divArmeeTypeAlly": "Verbündetenkontigent",
+    "divArmeeTypeOther": "Loses Kontigent",
+    "divSummaryPointsText": "Gesamtpunkte",
+    "divPointsText": "Punkte",
+    "groupTextHQ": "HQ",
+    "groupTextElite": "Elite",
+    "groupTextDefault": "Standard",
+    "groupTextStorm": "Sturm",
+    "groupTextSupport": "Unterstützung",
+    "groupTextDefence": "Befestigung",
+    "groupTextHulk": "Kriegskolos",
+    "defaultText": "Keine Übersetzung verfügbar"
+}

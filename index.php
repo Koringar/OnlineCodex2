@@ -20,10 +20,10 @@
  
             <div data-role="header" style="overflow:hidden;">
                 <h1>Online Codex2</h1>
-                <a href="#optionsMenu" data-rel="popup" data-icon="gear" data-iconpos="notext" data-transition="none" class="ui-btn-right">Einstellungen</a>
+                <a href="#optionsMenu" data-rel="popup" data-icon="gear" data-iconpos="notext" data-transition="none" class="ui-btn-right"></a>
                 <div data-role="navbar" data-iconpos="left">
-                    <a href="#addArmee" data-rel="popup" data-icon="plus" data-transition="none" data-iconpos="left">Armee</a>
-                    <div id="summary">Gesamtpunkte: 0</div>
+                    <a href="#addArmee" data-rel="popup" data-icon="plus" data-transition="none" data-iconpos="left"></a>
+                    <div id="summary"></div>
                 </div><!-- /navbar -->
             </div><!-- /header -->
  

@@ -24,6 +24,7 @@
         <mkdir dir="${builddir}/codex"/>
         <mkdir dir="${builddir}/js"/>
         <mkdir dir="${builddir}/css"/>
+        <mkdir dir="${builddir}/language"/>
     </target>
     
     <target name="buildFiles">
@@ -42,6 +43,15 @@
             <targetfile />
         
             <fileset dir="${basedir}/codex" includes="*.json"/>
+            <mapper type="identity"/>
+        </apply>
+        <apply executable="${phpCommand}" dest="${builddir}/language" logError="true" failonerror="true">
+            <arg value="${basedir}/helper.php"/>
+            <arg value="minJson"/>
+            <srcfile />
+            <targetfile />
+        
+            <fileset dir="${basedir}/language" includes="*.json"/>
             <mapper type="identity"/>
         </apply>
     </target>
