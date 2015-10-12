@@ -49,7 +49,7 @@ $(TOCOPYTARGET): | $(TARGET)
 	done
 
 $(CACHEMANIFEST): | $(TARGET)
-	$(PHP) helper.php genCacheManifest $(CACHEMANIFEST) $(INDEXTARGET) $(TOCOMPILETARGET) $(TOCOPYTARGET)
+	$(PHP) helper.php genCacheManifest $(CACHEMANIFEST) $(INDEXTARGET:$(TARGET)/%=%) $(TOCOMPILETARGET:$(TARGET)/%=%) $(TOCOPYTARGET:$(TARGET)/%=%)
 
 $(TARGET):
 	for i in $(DIRS); do \
