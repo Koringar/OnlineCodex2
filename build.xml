@@ -24,16 +24,13 @@
         <mkdir dir="${builddir}/codex"/>
         <mkdir dir="${builddir}/js"/>
         <mkdir dir="${builddir}/css"/>
+        <mkdir dir="${builddir}/language"/>
     </target>
     
     <target name="buildFiles">
         <echo>Build Index</echo>
         <exec executable="${phpCommand}" logError="true" failonerror="true" output="${builddir}/index.html">
             <arg value="${basedir}/index.php"/>
-        </exec>
-        <exec executable="${phpCommand}" logError="true" failonerror="true" output="${builddir}/js/oc2.h.js">
-            <arg value="${basedir}/js/oc2.h.js.php"/>
-            <arg value="make"/>
         </exec>
         <echo>Build JSON</echo>
         <exec executable="${phpCommand}" logError="true" failonerror="true" output="${builddir}/codex/index.json">
@@ -46,6 +43,15 @@
             <targetfile />
         
             <fileset dir="${basedir}/codex" includes="*.json"/>
+            <mapper type="identity"/>
+        </apply>
+        <apply executable="${phpCommand}" dest="${builddir}/language" logError="true" failonerror="true">
+            <arg value="${basedir}/helper.php"/>
+            <arg value="minJson"/>
+            <srcfile />
+            <targetfile />
+        
+            <fileset dir="${basedir}/language" includes="*.json"/>
             <mapper type="identity"/>
         </apply>
     </target>
