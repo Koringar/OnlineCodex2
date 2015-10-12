@@ -227,12 +227,12 @@
             "minGroup": 1,
             "maxGroup": 3,
             "entityCost": 125,
-            "note": "todo",
+            "perModel": true,
             "options": [
               [
-                {"name": "Hitzestrahker", "default": true, "perModel": true},
-                {"name": "Partikelkanone", "cost": 5, "perModel": true},
-                {"name": "Synchronisierte Schwere Gaus-Kanone", "cost": 10, "perModel": true}
+                {"name": "Hitzestrahker", "default": true},
+                {"name": "Partikelkanone", "cost": 5},
+                {"name": "Synchronisierte Schwere Gaus-Kanone", "cost": 10}
               ],
               {"name": "Quantenschilde", "must": true}
             ]
@@ -306,11 +306,11 @@
             "minGroup": 3,
             "maxGroup": 6,
             "entityCost": 40,
-            "note": "todo",
+            "perModel": true,
             "options": [
-                {"name": "Fesselspulen", "cost": 3, "perModel": true},
-                {"name": "Partikelwerfer", "cost": 5, "perModel": true},
-                {"name": "Transdimensionsstrahler", "cost": 10, "perModel": true}
+                {"name": "Fesselspulen", "cost": 3},
+                {"name": "Partikelwerfer", "cost": 5},
+                {"name": "Transdimensionsstrahler", "cost": 10}
             ]
           },
           {
@@ -326,17 +326,17 @@
             "minGroup": 3,
             "maxGroup": 10,
             "entityCost": 18,
-            "note": "todo",
+            "perModel": true,
             "options": [
               [
-                {"name": "Synchronisierte Gauss-Blaster", "default": true, "perModel": true},
-                {"name": "Synchronisierter Tesla-Karabiner", "perModel": true},
-                {"name": "Partikelstrahler", "cost": 2, "perModel": true}
+                {"name": "Synchronisierte Gauss-Blaster", "default": true},
+                {"name": "Synchronisierter Tesla-Karabiner"},
+                {"name": "Partikelstrahler", "cost": 2}
               ],
-              {"name": "Schildplatten", "cost": 2, "perModel": true},
+              {"name": "Schildplatten", "cost": 2},
               [
-                {"name": "Schattenprojektor", "cost": 1, "perModel": true},
-                {"name": "Nebuloskop", "cost": 2, "perModel": true}
+                {"name": "Schattenprojektor", "cost": 1},
+                {"name": "Nebuloskop", "cost": 2}
               ]
             ]
           },
@@ -369,11 +369,11 @@
             "minGroup": 1,
             "maxGroup": 3,
             "entityCost": 50,
-            "note": "todo",
+            "perModel": true,
             "options": [
-              {"name": "Fabrikatorklauen-Satz", "cost": 5, "perModel": true},
-              {"name": "Zwielichtprisma", "cost": 10, "perModel": true},
-              {"name": "Partikelstrahler", "cost": 10, "perModel": true}
+              {"name": "Fabrikatorklauen-Satz", "cost": 5},
+              {"name": "Zwielichtprisma", "cost": 10},
+              {"name": "Partikelstrahler", "cost": 10}
             ]
           },
           {
