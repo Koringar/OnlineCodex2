@@ -132,7 +132,8 @@ function initArmeeDialog(){
     $("#addArmee").append('<a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right" title="' + getNationalText("buttonCloseTitle") + '"></a>');
     $("#addArmee").append('<ul data-role="listview" class="ui-grid-solo ui-listview"></ul>');
     $("#addArmee ul").append('<li data-role="list-divider" class="ui-block-a ui-li-divider ui-bar-inherit ui-first-child ui-last-child" role="heading">' + getNationalText("popupAddArmyText") + ':</li>');
-    $.each(indexJson, function (file, name) {
+    $.each(indexJson, function (file, data) {
+        name = data.name;
         $("#addArmee ul").append('<li data-icon="false"><a href="#" class="ui-btn" json="' + file + '">'+name+'</a></li>');
     });
     //Popup nachträglich initialisieren
