@@ -6,15 +6,18 @@ TOCOPY := css/onlinecode2.css js/onlinecodex2.js \
 TOCOMPILE := codex/index.json
 INDEX := index
 CODEX := $(wildcard codex/*.json)
+LANG := $(wildcard language/*.json)
 DIRS := $(TARGET) $(TARGET)/codex $(TARGET)/js $(TARGET)/js/libs \
 	$(TARGET)/js/libs/jquery $(TARGET)/js/libs/jquery-mobile \
-	$(TARGET)/js/libs/jquery-mobile/images $(TARGET)/css
+	$(TARGET)/js/libs/jquery-mobile/images $(TARGET)/css \
+	$(TARGET)/language
 
 #erzeugt die Ziele
 TOCOPYTARGET := $(addprefix $(TARGET)/, $(TOCOPY))
 TOCOMPILETARGET := $(addprefix $(TARGET)/, $(TOCOMPILE))
 INDEXTARGET := $(addsuffix .html, $(addprefix $(TARGET)/, $(INDEX)))
 CODEXTARGET := $(addprefix $(TARGET)/, $(CODEX))
+LANGTARGET := $(addprefix $(TARGET)/, $(LANG))
 CACHEMANIFEST := $(addprefix $(TARGET)/, cache.manifest)
 
 ifeq ($(OS), Windows_NT)
@@ -28,7 +31,9 @@ else
 endif
 
 .PHONY: all
-all: $(TOCOMPILETARGET) $(TOCOPYTARGET) $(INDEXTARGET) $(CODEXTARGET) $(CACHEMANIFEST)
+all: $(TOCOMPILETARGET) $(TOCOPYTARGET) \
+	$(INDEXTARGET) $(CODEXTARGET) \
+	$(CACHEMANIFEST) $(LANGTARGET)
 
 $(INDEXTARGET): $(addsuffix .php,$(INDEX)) | $(TARGET)
 	$(PHP) $< > $@
@@ -40,6 +45,11 @@ $(TOCOMPILETARGET): | $(TARGET)
 
 $(CODEXTARGET): | $(TARGET)
 	for i in $(CODEX); do \
+	  $(PHP) helper.php minJson $$i $(addprefix $(TARGET)/, $$i) ;\
+	done
+	
+$(LANGTARGET): | $(TARGET)
+	for i in $(LANG); do \
 	  $(PHP) helper.php minJson $$i $(addprefix $(TARGET)/, $$i) ;\
 	done
 
@@ -63,3 +73,7 @@ clean:
 .PHONY: checkCodexJson
 checkCodexJson:
 	$(PHP) helper.php checkCodexJson
+	
+.PHONY: test
+test:
+	echo $(LANG)

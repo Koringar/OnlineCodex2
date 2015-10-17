@@ -5,7 +5,7 @@ function checkCodexJson() {
   $codexDir = "codex";
   foreach ($codexIndexJson as $file => $value) {
     $content = json_decode(file_get_contents($codexDir . "/" . $file));
-    echo "check $value\n";
+    echo "check " . $value->{"name"} . "->" . $value->{"version"} . " from " . $value->{"date"} . "\n";
     $groups = $content->{"groups"};
     $names = array();
     $lastName = "";
@@ -70,8 +70,11 @@ function getCodexIndexJson() {
       continue;
     }
     $content = json_decode(file_get_contents($codexDir . "/" . $file));
-    $name = $content->{"name"};
-    $armee[$file] = $name;
+    $item = array();
+    $item["name"] = $content->{"name"};
+    $item["date"] = $content->{"date"};
+    $item["version"] = $content->{"version"};
+    $armee[$file] = $item;
   }
   return json_encode($armee);
 }
