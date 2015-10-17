@@ -1,0 +1,89 @@
+{
+    "name": "Tau",
+    "version": 7,
+    "date": "2015-10-11 10:33",
+    "groups": {
+        "HQ": [
+            
+        ],
+        "elite": [
+          {
+            "name": "XV95 Ghostkeel Battlesuits",
+            "cost": 130,
+            "minGroup": 1,
+            "maxGroup": 3,
+            "entityCost": 130,
+            "entityName": "Ghostkeel Shas'vre",
+            "options": [
+                {"name": "Ghostkeel Battlesuit"},
+                {"name": "Ghostkeel-Sesorangriffspaket"},
+                {"name": "Holophotonen-Gegenmaßnahmen"},
+                {"name": "MV5 Stealth Drones", "min": "2"},
+                [
+                        {"name": "Fusionskanone", "default": true},
+                        {"name": "Zyklischen Ionensturmbolter", "cost": 0}
+                ],
+                [
+                        {"name": "Synchronisierter Flammenwerfer", "default": true},
+                        {"name": "Synchronisierter Bündelkanone", "cost": 5},
+                        {"name": "Synchronisierter Fusionsblaster", "cost": 10}
+                ],
+                {"name": "Ritual des Klingenbundes", "cost": "1", "all": true}
+            ],
+            "attach": []
+          }
+        ],
+        "default": [
+          {
+            "name": "Breacher Team",
+            "cost": 45,
+            "minGroup": 5,
+            "maxGroup": 10,
+            "entityCost": 9,
+            "entityName": "Fire Warrior",
+            "options": [
+                {"name": "Pulsblaster"},
+                {"name": "Feldverstärker-Relais"},
+                {"name": "Photonengranaten"},
+                {"name": "EMP-Granaten", "cost": 2},
+                {"name": "Ritual des Klingenbundes", "cost": "1", "all": true}
+            ],
+            "attach": []
+          }
+        ],
+        "storm": [
+            
+        ],
+        "support": [
+            
+        ],
+        "hulk": [
+          {
+            "name": "KV128 Stormsurges",
+            "cost": 360,
+            "minGroup": 1,
+            "maxGroup": 3,
+            "entityCost": 360,
+            "entityName": "KV128 Stormsurge",
+            "options": [
+                [
+                        {"name": "Pulsblasterkanone", "default": true},
+                        {"name": "Pulsbeschleunigerkanone", "cost": 15}
+                ],
+                [
+                        {"name": "Synchronisierter Flammenwerfer", "default": true},
+                        {"name": "Synchronisierter Bündelkanone", "cost": 5},
+                        {"name": "Synchronisierter Streugranatwerfer", "cost": 5}
+                ]
+            ],
+            "attach": []
+          },
+          {
+            "name": "KX139 Ta’unar Supremacy Armour",
+            "cost": 600,
+            "options": [],
+            "attach": []
+          }
+        ]
+    }
+}

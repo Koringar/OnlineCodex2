@@ -10,13 +10,13 @@ var allSelectetArmees = new Array(); // Globale Variable für alle ausgewählten
 // Seite initialisieren
 $(document).ready(function() {
     //Paar Sachen der Seite übersetzen
-    $('a[href="#optionsMenu"').attr("title", getNationalText("buttonGearTitle")).html(getNationalText("buttonGearTitle"));
-    $('a[href="#addArmee"').attr("title", getNationalText("buttonAddArmyTitle")).html(getNationalText("buttonAddArmyText"));
+    $('a[href="#optionsMenu"').attr({title: getNationalText("buttonGearTitle")}).html(getNationalText("buttonGearTitle"));
+    $('a[href="#addArmee"').attr({title: getNationalText("buttonAddArmyTitle")}).html(getNationalText("buttonAddArmyText"));
     $("#summary").html(getNationalText("divSummaryPointsText") + ": 0");
     
     //Init Popups
     initOptionDialog();
-    initArmeeDialog();
+    initAddArmeeDialog();
     
     //Seite neu aufbauen
     renderSelectetArmees();
@@ -68,22 +68,30 @@ function getUrlParameterByName(name) {
  * Gibt den Text für die aktuelle Sprache, wird über die URL ermittelt.
  * Wenn er nichts finden kann geht er auf Deutsch.
  * 
- * @param {type} key: Gewünschter Text Key
+ * @param {String} key: Gewünschter Text Key
+ * @param {String} suffix: optional, wird beim Suchen vorne an den Key gehangen
  * @returns {String}
  */
-function getNationalText(key){
+function getNationalText(key, suffix){
     var lang = getUrlParameterByName("lang");
     var langpack;
-    if(lang !== null && lang !== ""){
+    if(lang !== null && lang !== undefined && lang !== ""){
         langpack = get("language/" + lang + ".json");
     }
     //Fallback auf das DE Package
-    if(langpack !== null){
+    if(langpack === null || langpack === undefined){
         langpack = get("language/de.json");
     }
-    var value = langpack[key];
+    var value;
+    if(suffix !== null && suffix !== undefined && suffix !== ""){
+        //Ersten Buchstaben des Key Sicherheitshalber groß machen
+        key = key.charAt(0).toUpperCase() + key.slice(1);
+        value = langpack[suffix + key];
+    }else if(key !== null && key !== undefined && key !== ""){
+        value = langpack[key];
+    }
     //Fallback auf den Default Text
-    if(value === null || value === ""){
+    if(value === null || value === undefined || value === ""){
         value = langpack["defaultText"];
     }
     return value;
@@ -122,16 +130,33 @@ function getArmeeJson(armee){
 }
 
 /*
+ * Gibt den Index der gesuchten Armee in den Ausgewählten Armeen wieder.
+ * 
+ * @param {type} UNID: ID der Armee
+ * @returns {Number}
+ */
+function getIndexInSelectedArmees(UNID){
+    var armeeCounter = 0;
+    for (var i = 0; i < allSelectetArmees.length; i++) {
+        if(allSelectetArmees[i].UNID === UNID){
+            armeeCounter = i;
+            break;
+        }
+    }
+    return armeeCounter;
+}
+
+/*
  * Initialisert den Dialog für die verschiedenen Armeen
  */
-function initArmeeDialog(){
+function initAddArmeeDialog(){
     //Hole alle Armeen
     var indexJson = getArmyIndex();
     //Fülle den Dialog mit den Elementen
     $("div[data-role='navbar']").prepend('<div data-history="false" data-role="popup" id="addArmee" class="ui-popup ui-body-a ui-overlay-shadow ui-corner-all"></div>');
     $("#addArmee").append('<a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right" title="' + getNationalText("buttonCloseTitle") + '"></a>');
-    $("#addArmee").append('<ul data-role="listview" class="ui-grid-solo ui-listview"></ul>');
-    $("#addArmee ul").append('<li data-role="list-divider" class="ui-block-a ui-li-divider ui-bar-inherit ui-first-child ui-last-child" role="heading">' + getNationalText("popupAddArmyText") + ':</li>');
+    $("#addArmee").append('<ul data-role="listview" class="ui-grid-solo ui-listview popup"></ul>');
+    $("#addArmee ul").append('<li data-role="list-divider" class="ui-block-a ui-li-divider ui-bar-inherit" role="heading">' + getNationalText("popupAddArmyText") + ':</li>');
     $.each(indexJson, function (file, name) {
         $("#addArmee ul").append('<li data-icon="false"><a href="#" class="ui-btn" json="' + file + '">'+name+'</a></li>');
     });
@@ -151,7 +176,7 @@ function initOptionDialog(){
     //TODO:
     $("div[data-role='header']").prepend('<div data-history="false" data-role="popup" id="optionsMenu" class="ui-popup ui-body-a ui-overlay-shadow ui-corner-all"></div>');
     $("#optionsMenu").append('<a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right" title="' + getNationalText("buttonCloseTitle") + '"></a>');
-    $("#optionsMenu").append('<ul data-role="listview" class="ui-listview ui-listview-inset ui-corner-all ui-shadow"></ul>');
+    $("#optionsMenu").append('<ul data-role="listview" class="ui-listview ui-listview-inset ui-corner-all ui-shadow popup"></ul>');
     $("#optionsMenu ul").append('<li data-icon="false"><a href="#" class="ui-btn">Speichern</a></li>');
     $("#optionsMenu ul").append('<li data-icon="false"><a href="#" class="ui-btn">Laden</a></li>');
     $("#optionsMenu ul").append('<li data-icon="false"><a href="#" class="ui-btn">Drucken</a></li>');
@@ -162,24 +187,57 @@ function initOptionDialog(){
     $("#optionsMenu").popup();
 }
 
+function initChangeArmeeDialog(armeeJson){
+    var defaultFormations = getDefaultFormationJson().formations;
+    var armeeFormations = armeeJson.formations;
+    
+    //Prüfe ob die Daten zum Anpassen Dialog der Armee schon existierren, die muss es nur einmal geben
+    if($('div[id="changeArmee' + armeeJson.name + '"]').length === 0){
+        //Fülle den Dialog mit den Elementen
+        $("div[data-role='content']").prepend('<div data-history="false" data-role="popup" id="changeArmee' + armeeJson.name + '" class="ui-popup ui-body-a ui-overlay-shadow ui-corner-all"></div>');
+        $('div[id="changeArmee' + armeeJson.name + '"]').append('<a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right" title="' + getNationalText("buttonCloseTitle") + '"></a>');
+        //Inhalt setzen
+        $('div[id="changeArmee' + armeeJson.name + '"]').append('<ul data-role="listview" class="ui-grid-solo ui-listview popup"></ul>');
+        $('div[id="changeArmee' + armeeJson.name + '"] ul').append('<li data-role="list-divider" class="ui-block-a ui-li-divider ui-bar-inherit">' + getNationalText("popupChangeArmeeText") + ':</li>');
+        if(defaultFormations !== null && defaultFormations !== undefined){
+            $.each(defaultFormations, function (counter, formation) {
+                $('div[id="changeArmee' + armeeJson.name + '"] ul').append('<li data-icon="false"><a href="#changeArmee" class="ui-btn" type="' + formation.name + '">' + getNationalText(formation.name, "divArmeeType") + '</a></li>');
+            });
+        }
+        if(armeeFormations !== null && armeeFormations !== undefined){
+            $('div[id="changeArmee' + armeeJson.name + '"] ul').append('<li data-role="list-divider" class="ui-block-a ui-li-divider ui-bar-inherit">' + getNationalText("popupChangeFormationText") + ':</li>');
+            $.each(armeeFormations, function (counter, formation) {
+                $('div[id="changeArmee' + armeeJson.name + '"] ul').append('<li data-icon="false"><a href="#changeArmee" class="ui-btn" type="' + formation.name + '">' + formation.name + '</a></li>');
+            });
+        }
+        //Button zum entfernen der Armee
+        $('div[id="changeArmee' + armeeJson.name + '"] ul').append('<li data-icon="false"><a href="#changeArmee" class="ui-btn" type="deleteArmee">' + getNationalText("buttonDeleteArmeeTitle") + '</a></li>');
+         
+        //Der Popup muss mit seinen Daten nur einmal Initialsiert werden
+        $("#changeArmee" + armeeJson.name).popup();
+        //Clickevents einfangen und verarbeiten, im Anpassendialog
+        $("#changeArmee" + armeeJson.name + " a[href=#changeArmee]").click(function() {
+            changeArmee($(this));
+        });
+    }
+}
+
 /*
  * Initialisert die Optionen für den Einheiten Dialog
  * 
  * @param {Object} armeeJson: Das geladene JSON Object
  */
-function initUnitDialog(armeeJson){
+function initAddUnitDialog(armeeJson){
     //Prüfe ob die Daten zum Einheiten Dialog schon existierren, die muss es nur einmal geben
     if($('div[id="addUnit' + armeeJson.name + '"]').length === 0){
         //Fülle den Dialog mit den Elementen
         $("div[data-role='content']").prepend('<div data-history="false" data-role="popup" id="addUnit' + armeeJson.name + '" class="ui-popup ui-body-a ui-overlay-shadow ui-corner-all"></div>');
         $('div[id="addUnit' + armeeJson.name + '"]').append('<a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right" title="' + getNationalText("buttonCloseTitle") + '"></a>');
         //Inhalt setzen
-        $('div[id="addUnit' + armeeJson.name + '"]').append('<div class="unitPopup"></div>');
+        $('div[id="addUnit' + armeeJson.name + '"]').append('<div class="popup"></div>');
         $('div[id="addUnit' + armeeJson.name + '"] > div:nth-child(2)').append('<div class="popupHeader">' + armeeJson.name + '</div><div class="unitGroups"></div>');
         $.each(armeeJson.groups, function (group, array) {
-            //Erster Buchstabe der Gruppe groß machen, wegen dem Langpack
-            var langKey = group.charAt(0).toUpperCase() + group.slice(1);
-            $('div[id="addUnit' + armeeJson.name + '"] div.unitGroups').append('<div class="popupTable ' + group + '"><div class="popupTableRow"><div>' + getNationalText("groupText" + langKey) + '</div><div>' + getNationalText("divPointsText") + '</div></div></div>');
+            $('div[id="addUnit' + armeeJson.name + '"] div.unitGroups').append('<div class="popupTable ' + group + '"><div class="popupTableRow"><div>' + getNationalText(group, "groupText") + '</div><div>' + getNationalText("divPointsText") + '</div></div></div>');
             $.each(array, function (counter, unit) {
                 $('div[id="addUnit' + armeeJson.name + '"] div.' + group).append('<a href="#addUnitToArmee" class="ui-btn popupTableRow"><div>' + unit.name + '</div><div>' + unit.cost + '</div></a>');
             });
@@ -200,20 +258,17 @@ function initUnitDialog(armeeJson){
  * @param {String} UnID: Eindeutige ID
  * @param {String} ArmeeName: Name der Armee
  */
-function initArmeeContainer(UNID, ArmeeName){
-    var defaultFormations = getDefaultFormationJson();
-    //Den Key fürs Langpack ermitteln
-    var langKey = ((allSelectetArmees.length===1)?defaultFormations.formations[0].name:defaultFormations.formations[1].name);
-    //Erster Buchstabe groß machen, sonst findet er nichts
-    langKey = langKey.charAt(0).toUpperCase() + langKey.slice(1);
+function initArmeeContainer(Armee){
+    var UNID = Armee.UNID;
+    var ArmeeName = Armee.Name;
     //Der Container
     $("div[data-role='content']").append('<div id="' + UNID + '" class="armee"><div class="armeeHeader"></div></div>');
     //Anzeige des Name
     $("#" + UNID + " > div.armeeHeader").append('<div class="armeeName">' + ArmeeName + '</div>');
     //Anzeige der Formation, die ersten Formation ist das Hauptkontigent ansonsten eben Verbündetenkontigent
-    $("#" + UNID + " > div.armeeHeader").append('<div class="armeeType">(' + getNationalText("divArmeeType" + langKey) + ')</div>');
+    $("#" + UNID + " > div.armeeHeader").append('<div class="armeeType" type="' + Armee.Type + '">(' + getNationalText(Armee.Type, "divArmeeType") + ')</div>');
     //Schaltfläche zum ändern der Formation
-    $("#" + UNID + " > div.armeeHeader").append('<a href="#" class="ui-btn ui-icon-edit ui-btn-icon-notext ui-shadow ui-corner-all" title="' + getNationalText("buttonChangeArmeeTitle") + '"></a>');
+    $("#" + UNID + " > div.armeeHeader").append('<a href="#changeArmee' + ArmeeName + '" data-rel="popup" class="ui-btn ui-icon-edit ui-btn-icon-notext ui-shadow ui-corner-all" title="' + getNationalText("buttonChangeArmeeTitle") + '"></a>');
     //Für Einheitenauswahl
     $("#" + UNID + " > div.armeeHeader").append('<a href="#addUnit' + ArmeeName + '" data-rel="popup" class="ui-btn ui-icon-plus ui-btn-icon-notext ui-shadow ui-corner-all" title="' + getNationalText("buttonAddUnitTitle") + '"></a>');
     //Alle Gruppen in einen Container mit Flex
@@ -230,8 +285,14 @@ function initArmeeContainer(UNID, ArmeeName){
     $("#" + UNID).append('<div class="armeeSummary">' + getNationalText("divSummaryPointsText") + ' ' + ArmeeName + ': 0</div>');
     
     //Muss ich einfangen, um die ID zusetzen von wo aus der Dialog aufgerufen wird.
+    $('#' + UNID + ' a[href="#changeArmee' + ArmeeName + '"]').click(function() {
+        $('div[id="changeArmee' + ArmeeName + '"]').attr({UNID: UNID});
+        //Außerdem noch setzen was momentan ausgewählt ist, TODO: noch nicht zufriedendstellend
+        //var currentType = $('#' + UNID + ' div.armeeType').attr("type");
+        //$('div[id="changeArmee' + ArmeeName + '"] div[type="' + currentType + '"]').attr({selected: true});
+    });
     $('#' + UNID + ' a[href="#addUnit' + ArmeeName + '"]').click(function() {
-        $('div[id="addUnit' + ArmeeName + '"]').attr({armeeId: UNID});
+        $('div[id="addUnit' + ArmeeName + '"]').attr({UNID: UNID});
     });
     //TODO: Anpassen Popup/Dialog initialisieren
 }
@@ -255,12 +316,15 @@ function loadArmee(file){
     //Lade JSON
     var armeeJson = getArmeeJson(file);
     //Die Auswahl Eindeutig machen damit die besser auf sie zugegriffen werden kann
-    var armeeId = armeeJson.name + date.getTime();
+    var UNID = armeeJson.name + date.getTime();
     //Speicher die UNID und den Armee Name in ein Object, in diesem werden dann die Auswahlen gesetzt
     var newArmee = new Object();
-    newArmee.UNID = armeeId;
+    newArmee.UNID = UNID;
     newArmee.Name = armeeJson.name;
     newArmee.File = file;
+    //Festelgen um welchen Type es sich handelt
+    var defaultFormations = getDefaultFormationJson();
+    newArmee.Type = ((allSelectetArmees.length===0)?defaultFormations.formations[0].name:defaultFormations.formations[1].name);
     //Gruppen für die Auswahl initialisieren
     newArmee.HQ = [];
     newArmee.elite = [];
@@ -271,43 +335,60 @@ function loadArmee(file){
     //Zur Auswahl aller Selektierten Armee hinzufügen
     allSelectetArmees.push(newArmee);
     
-    //Initialisier den Dialog für die Einheitenauswahl
-    initUnitDialog(armeeJson);
-    //Initialisere Armeeabschnitt in Body
-    initArmeeContainer(newArmee.UNID, newArmee.Name);
+    //Initialisiere den Dialog zum Anpassen der Armee (Formations/Löschen)
+    initChangeArmeeDialog(armeeJson);
+    //Initialisiere den Dialog für die Einheitenauswahl
+    initAddUnitDialog(armeeJson);
+    //Initialisiere Armeeabschnitt in Body
+    initArmeeContainer(newArmee);
 }
 
 /*
- * Entfernt die Armee aus dem globalen Speicher, aktualisert den Dialog für die verschiedenen Einheiten und
- * löscht den Abschnitt im Body für die Armee
+ * Ändern den Type der Armee oder löscht sie, je nachdem was angeklickt wurde,
+ * passt auch gleich den Globalen Speicher und Body an.
  */
-function removeArmee(armee){
-    console.log(armee);
+function changeArmee(armee){
+    var auswahl = armee.attr("type");
+    var auswahlText = armee.html();
+    var UNID = armee.parent().parent().parent().attr("UNID");
+    var armeeIndex = getIndexInSelectedArmees(UNID);
+    
+    //Armee löschen
+    if(auswahl === "deleteArmee"){
+        $('#' + UNID).remove();
+        allSelectetArmees.splice(armeeIndex, 1);
+        //Zählte alle Punkte zusammen
+        sumTotalPoins();
+    } else {
+    //Ansonsten Type oder Formation ändern
+        $('#' + UNID + ' div.armeeType').attr({type: auswahl});
+        if(auswahlText === null || auswahlText === undefined){
+            $('#' + UNID + ' div.armeeType').html("(" + getNationalText(auswahl, "divArmeeType") + ")");
+        }else{
+            $('#' + UNID + ' div.armeeType').html("(" + auswahlText + ")");
+        }
+        allSelectetArmees[armeeIndex].Type = auswahl;
+    }
 }
 
 /*
+ * Fügt die Ausgewählte Einheit an die Armee an, von wo der Dialog aufgerufen wurde.
  * 
- * @param {type} unitToAdd
+ * @param {type} unitToAdd, das Element
  */
 function addUnit(unitToAdd){
+    // Für die Millisekunden, für Eindeutigkeit
+    var date = new Date();
     var auswahl = unitToAdd.children("div:first-child").html();
+    //Die Auswahl Eindeutig machen damit die besser auf sie zugegriffen werden kann
+    var auswahlUNID = "unit" + date.getTime();
     var groupname = unitToAdd.parent().attr("class").split(' ')[1];
     //Die ID der Armee, wo alles angehangen werden soll, ist am obersten Element
-    var armeeId = unitToAdd.parent().parent().parent().parent().attr("armeeId");
-    
+    var UNID = unitToAdd.parent().parent().parent().parent().attr("UNID");
     //Ausgewählte Armee merken
-    var armeeCounter = -1;
+    var armeeIndex = getIndexInSelectedArmees(UNID);
     //JSON des Codex holen, dafür muss ich erstmal den Filename des JSON finden
-    var codex = null;
-    for (var i = 0; i <= allSelectetArmees.length; i++) {
-        if(allSelectetArmees[i].UNID === armeeId){
-            armeeCounter = i;
-            break;
-        }
-    }
-    if(armeeCounter >= 0){
-        codex = getArmeeJson(allSelectetArmees[armeeCounter].File);
-    }
+    var codex = getArmeeJson(allSelectetArmees[armeeIndex].File);
     
     //Innerhalb des JSON die Auswahl suchen und das zur Seite und der Ausgewälten Armee hinzufügen
     var group = null;
@@ -321,24 +402,63 @@ function addUnit(unitToAdd){
         }
     }
     //Gruppe sichtbar machen
-    if($('#' + armeeId + ' div.' + groupname).attr("style") === "display: none;"){
-        $('#' + armeeId + ' div.' + groupname).removeAttr("style");
+    if($('#' + UNID + ' div.' + groupname).attr("style") === "display: none;"){
+        $('#' + UNID + ' div.' + groupname).removeAttr("style");
     };
     
-    $('#' + armeeId + ' div.' + groupname).append('<div class="ui-grid-b value"></div>');
+    $('#' + UNID + ' div.' + groupname).append('<div id="' + auswahlUNID + '" class="ui-grid-b value"></div>');
     //Dem gerade erstellten Container die Werte mitgeben
-    $('#' + armeeId + ' div.' + groupname + ' div.ui-grid-b:last-child').append('<div class="ui-block-a selectionName">' + auswahl.name + '</div>');
-    $('#' + armeeId + ' div.' + groupname + ' div.ui-grid-b:last-child').append('<div class="ui-block-b selectionPoints">' + auswahl.cost + ' Punkte</div>');
-    $('#' + armeeId + ' div.' + groupname + ' div.ui-grid-b:last-child').append('<div class="ui-block-c"><a href="#" class="ui-btn ui-icon-edit ui-btn-icon-notext ui-shadow ui-corner-all" title="' + getNationalText("buttonChangeUnitTitle") + '"></a></div>');
-    //TODO: Default Options Hinzufügen, der Rest geht über den Anpassen Dialog
-    $('#' + armeeId + ' div.' + groupname + ' div.ui-grid-b:last-child').append('<div class="selectionOptions"></div>');
+    $('#' + auswahlUNID).append('<div class="ui-block-a selectionName">' + auswahl.name + '</div>');
+    $('#' + auswahlUNID).append('<div class="ui-block-b selectionPoints">' + auswahl.cost + ' Punkte</div>');
+    $('#' + auswahlUNID).append('<div class="ui-block-c"><a href="#" class="ui-btn ui-icon-edit ui-btn-icon-notext ui-shadow ui-corner-all" title="' + getNationalText("buttonChangeUnitTitle") + '"></a></div>');
+    $('#' + auswahlUNID).append('<div class="selectionOptions"></div>');
+    //Einheitenname ermitteln
+    var entityName = "";
+    if(auswahl.entityName !== null && auswahl.entityName !== undefined){
+        entityName = auswahl.entityName;
+    }else{
+        entityName = auswahl.name;
+    }
+    //Wenn minGroup größer 1 ist, dann versuchen es zusammen zufassen, wenn es genau gleich ist Einmal erzeugen, ansonsten nichts machen
+    if(auswahl.minGroup !== null && auswahl.minGroup !== undefined && auswahl.minGroup > 1){
+        $('#' + auswahlUNID + ' div.selectionOptions').append(auswahl.minGroup + " x " + entityName + "<br />");
+    }else if(auswahl.minGroup !== null && auswahl.minGroup !== undefined && auswahl.minGroup === 1){
+        $('#' + auswahlUNID + ' div.selectionOptions').append(entityName + "<br />");
+    }
+    //Default Options Hinzufügen, der Rest geht über den Anpassen Dialog
+    $.each(auswahl.options, function (counter, option) {
+        //Wenn es eine Gruppen von Möglichkeiten sind, dann ist es ein Array. Brauch aber nur die Default Angabe
+        if(Array.isArray(option)){
+            for (var i = 0; i < option.length; i++) {
+                if(option[i].default !== null && option[i].default !== undefined && option[i].default === true){
+                    option = option[i];
+                    break;
+                }
+            }
+        }
+        //Wenn es jetzt immer noch ein Array ist, dann ist keine Default Option vorhanden
+        if(!Array.isArray(option)){
+            //Default Angaben haben keine Kosten oder sind Default True
+            if(option.cost === null || option.cost === undefined){
+                if(auswahl.minGroup !== null && auswahl.minGroup !== undefined && auswahl.minGroup > 1){
+                    $('#' + auswahlUNID + ' div.selectionOptions').append("- " + auswahl.minGroup + " x " + option.name + "<br />");
+                }else{
+                    $('#' + auswahlUNID + ' div.selectionOptions').append("- " + option.name + "<br />");
+                }
+            }else if(option.default !== null && option.default !== undefined && option[i].default === true){
+                //TODO: Der Zweig notwendig???
+                console.log(option);
+            }
+        }
+    });
+    
     //Selektierte Armee erweitern, es wird nur die Auswahl gemerkt, die Punkte haben da nichts zu suchen
-    allSelectetArmees[i][groupname].push(auswahl.name);
+    allSelectetArmees[armeeIndex][groupname].push(auswahl.name);
     //Werte für die Einheitenanzahl und Punktekosten ermitteln
-    countGroupUnits(armeeId, groupname);
-    sumGroupPoints(armeeId, groupname);
+    countGroupUnits(UNID, groupname);
+    sumGroupPoints(UNID, groupname);
     //Zähle alle Punkte für die Armee
-    sumArmeePoints(armeeId);
+    sumArmeePoints(UNID);
     //Zähle alle Punkte zusammen
     sumTotalPoins();
     
@@ -349,7 +469,7 @@ function addUnit(unitToAdd){
  * Zählt innerhalb einer Gruppe alle Selectionen
  * 
  * @param {String} UnID: Eindeutige ID
- * @param {String} GroupName
+ * @param {String} GroupName: Der interne Gruppenname
  */
 function countGroupUnits(UNID, GroupName){
     var unitCounter = 0;
@@ -366,7 +486,7 @@ function countGroupUnits(UNID, GroupName){
  * Zählt innerhalb einer Gruppe alle Punkte der Selectionen
  * 
  * @param {String} UnID: Eindeutige ID
- * @param {String} GroupName
+ * @param {String} GroupName: Der interne Gruppenname
  */
 function sumGroupPoints(UNID, GroupName){
     var sumPoints = 0;
