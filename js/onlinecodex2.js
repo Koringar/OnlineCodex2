@@ -89,10 +89,6 @@ function getNationalText(key){
     return value;
 }
 
-function getArmyIndex() {
-  return get("codex/index.json");
-}
-
 /*
  * Gibt den Index, welcher Codex vorhanden ist, als JSON Object wieder.
  * 
