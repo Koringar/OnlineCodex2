@@ -172,7 +172,7 @@
             "minGroup": 5,
             "maxGroup": 5,
             "entityCost": 25,
-            "option": [
+            "options": [
               [
                 {"name": "Kriegssense", "default": true},
                 {"name": "Hyperphasenschwerter und Dispersionsschilde", "cost": 5}
