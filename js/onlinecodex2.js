@@ -97,10 +97,6 @@ function getNationalText(key, suffix){
     return value;
 }
 
-function getArmyIndex() {
-  return get("codex/index.json");
-}
-
 /*
  * Gibt den Index, welcher Codex vorhanden ist, als JSON Object wieder.
  * 
@@ -200,18 +196,19 @@ function initChangeArmeeDialog(armeeJson){
         //Inhalt setzen
         $('div[id="changeArmee' + armeeJson.name + '"]').append('<ul data-role="listview" class="ui-grid-solo ui-listview popup"></ul>');
         $('div[id="changeArmee' + armeeJson.name + '"] ul').append('<li data-role="list-divider" class="ui-block-a ui-li-divider ui-bar-inherit">' + getNationalText("popupChangeArmeeText") + ':</li>');
-        if(defaultFormations !== null && defaultFormations !== undefined){
+        if(defaultFormations !== null && defaultFormations !== undefined && defaultFormations.length > 0){
             $.each(defaultFormations, function (counter, formation) {
                 $('div[id="changeArmee' + armeeJson.name + '"] ul').append('<li data-icon="false"><a href="#changeArmee" class="ui-btn" type="' + formation.name + '">' + getNationalText(formation.name, "divArmeeType") + '</a></li>');
             });
         }
-        if(armeeFormations !== null && armeeFormations !== undefined){
+        if(armeeFormations !== null && armeeFormations !== undefined && armeeFormations.length > 0){
             $('div[id="changeArmee' + armeeJson.name + '"] ul').append('<li data-role="list-divider" class="ui-block-a ui-li-divider ui-bar-inherit">' + getNationalText("popupChangeFormationText") + ':</li>');
             $.each(armeeFormations, function (counter, formation) {
                 $('div[id="changeArmee' + armeeJson.name + '"] ul').append('<li data-icon="false"><a href="#changeArmee" class="ui-btn" type="' + formation.name + '">' + formation.name + '</a></li>');
             });
         }
         //Button zum entfernen der Armee
+        $('div[id="changeArmee' + armeeJson.name + '"] ul').append('<li data-role="list-divider" class="ui-block-a ui-li-divider ui-bar-inherit">' + getNationalText("popupDeleteArmeeText") + ':</li>');
         $('div[id="changeArmee' + armeeJson.name + '"] ul').append('<li data-icon="false"><a href="#changeArmee" class="ui-btn" type="deleteArmee">' + getNationalText("buttonDeleteArmeeTitle") + '</a></li>');
          
         //Der Popup muss mit seinen Daten nur einmal Initialsiert werden
@@ -426,32 +423,34 @@ function addUnit(unitToAdd){
     }else if(auswahl.minGroup !== null && auswahl.minGroup !== undefined && auswahl.minGroup === 1){
         $('#' + auswahlUNID + ' div.selectionOptions').append(entityName + "<br />");
     }
-    //Default Options Hinzufügen, der Rest geht über den Anpassen Dialog
-    $.each(auswahl.options, function (counter, option) {
-        //Wenn es eine Gruppen von Möglichkeiten sind, dann ist es ein Array. Brauch aber nur die Default Angabe
-        if(Array.isArray(option)){
-            for (var i = 0; i < option.length; i++) {
-                if(option[i].default !== null && option[i].default !== undefined && option[i].default === true){
-                    option = option[i];
-                    break;
+    if(auswahl.options !== null && auswahl.options !== undefined && auswahl.options.length > 0){
+        //Default Options Hinzufügen, der Rest geht über den Anpassen Dialog
+        $.each(auswahl.options, function (counter, option) {
+            //Wenn es eine Gruppen von Möglichkeiten sind, dann ist es ein Array. Brauch aber nur die Default Angabe
+            if(Array.isArray(option)){
+                for (var i = 0; i < option.length; i++) {
+                    if(option[i].default !== null && option[i].default !== undefined && option[i].default === true){
+                        option = option[i];
+                        break;
+                    }
                 }
             }
-        }
-        //Wenn es jetzt immer noch ein Array ist, dann ist keine Default Option vorhanden
-        if(!Array.isArray(option)){
-            //Default Angaben haben keine Kosten oder sind Default True
-            if(option.cost === null || option.cost === undefined){
-                if(auswahl.minGroup !== null && auswahl.minGroup !== undefined && auswahl.minGroup > 1){
-                    $('#' + auswahlUNID + ' div.selectionOptions').append("- " + auswahl.minGroup + " x " + option.name + "<br />");
-                }else{
-                    $('#' + auswahlUNID + ' div.selectionOptions').append("- " + option.name + "<br />");
+            //Wenn es jetzt immer noch ein Array ist, dann ist keine Default Option vorhanden
+            if(!Array.isArray(option)){
+                //Default Angaben haben keine Kosten oder sind Default True
+                if(option.cost === null || option.cost === undefined){
+                    if(auswahl.minGroup !== null && auswahl.minGroup !== undefined && auswahl.minGroup > 1){
+                        $('#' + auswahlUNID + ' div.selectionOptions').append("- " + auswahl.minGroup + " x " + option.name + "<br />");
+                    }else{
+                        $('#' + auswahlUNID + ' div.selectionOptions').append("- " + option.name + "<br />");
+                    }
+                }else if(option.default !== null && option.default !== undefined && option[i].default === true){
+                    //TODO: Der Zweig notwendig???
+                    console.log(option);
                 }
-            }else if(option.default !== null && option.default !== undefined && option[i].default === true){
-                //TODO: Der Zweig notwendig???
-                console.log(option);
             }
-        }
-    });
+        });
+    }
     
     //Selektierte Armee erweitern, es wird nur die Auswahl gemerkt, die Punkte haben da nichts zu suchen
     allSelectetArmees[armeeIndex][groupname].push(auswahl.name);

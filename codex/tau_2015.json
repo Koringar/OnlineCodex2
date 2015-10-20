@@ -34,6 +34,24 @@
           }
         ],
         "default": [
+            {
+            "name": "Strike Team",
+            "cost": 45,
+            "minGroup": 5,
+            "maxGroup": 12,
+            "entityCost": 9,
+            "entityName": "Fire Warrior",
+            "options": [
+                [
+                    {"name": "Pulsgewehr", "default": true},
+                    {"name": "Pulskarabiner", "cost": 0}
+                ],
+                {"name": "Photonengranaten"},
+                {"name": "EMP-Granaten", "cost": 2},
+                {"name": "Ritual des Klingenbundes", "cost": "1", "all": true}
+            ],
+            "attach": []
+          },
           {
             "name": "Breacher Team",
             "cost": 45,
