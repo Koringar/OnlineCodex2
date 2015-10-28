@@ -32,13 +32,13 @@ div.group{
     margin-top: 0.3em;
 }
 div.group .ui-block-a{
-    width: 65%;
+    width: 66%;
 }
 div.group .ui-block-b{
-    width: 25%;
+    width: 26%;
 }
 div.group .ui-grid-b .ui-block-c{
-    width: 10%;
+    width: 8%;
 }
 .ui-content a.ui-icon-edit, .ui-content a.ui-icon-plus{
     margin: 0;
@@ -69,7 +69,7 @@ div.popupHeader{
 .popup{
     overflow-y: scroll;
     max-height: 95vh;
-    max-width: 99vw;
+    max-width: 98vw;
 }
 div.popupTable{
     display: table;
