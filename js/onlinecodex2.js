@@ -434,6 +434,7 @@ function addUnit(unitToAdd){
     
     //TODO: Anpassen Popup/Dialog initialisieren
 }
+
 /*
  * Erzeugt die Einheit mit ihrer Anzahl und der Optionen
  * 
@@ -473,9 +474,11 @@ function renderUnit(unitObject, codexUnit){
         $('#' + unitObject.UNID + ' div.selectionOptions').append(unitSize + " x " + entityName + "<br />");
     }else if(unitSize >= 1 && !summary){
     //ansonten jede Einheit einzeiln auflisten
-        $('#' + unitObject.UNID + ' div.selectionOptions').append(entityName + "<br />");
+        for(var i = 0; i < unitSize; i++){
+            $('#' + unitObject.UNID + ' div.selectionOptions').append(entityName + "<br />");
+        }
     }else{
-    //Wenn es gar keine größen Angabe gibt dann ist es nur eine Einheit und die wird schon durch ihre Überschrift dargestellt, also nichts machen
+    //Wenn es gar keine Größenangabe gibt dann ist es nur eine Einheit und die wird schon durch ihre Überschrift dargestellt, also nichts machen
     
     }
 
@@ -500,7 +503,7 @@ function renderUnit(unitObject, codexUnit){
                 if((option.lists === null || option.lists === undefined) && (option.requirement === null || option.requirement === undefined) && (option.cost === null || option.cost === undefined)){
                     if(unitSize >= 1 && summary){
                     //Zusammengefasst Anzeige
-                        $('#' + unitObject.UNID + ' div.selectionOptions').append("- " + codexUnit.minGroup + " x " + option.name + "<br />");
+                        $('#' + unitObject.UNID + ' div.selectionOptions').append("- " + unitSize + " x " + option.name + "<br />");
                     }else{
                         if(option.min !== null && option.min !== undefined && option.min){
                         //Mehrere als eine Auswahl
