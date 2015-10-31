@@ -155,6 +155,9 @@ function initAddArmeeDialog(){
     $("#addArmee ul").append('<li data-role="list-divider" class="ui-block-a ui-li-divider ui-bar-inherit" role="heading">' + getNationalText("popupAddArmyText") + ':</li>');
     $.each(indexJson, function (file, data) {
         name = data.name;
+        if(data.longname !== null && data.longname !== undefined && data.longname !== ""){
+            name = data.longname;
+        }
         $("#addArmee ul").append('<li data-icon="false"><a href="#" class="ui-btn" json="' + file + '">'+name+'</a></li>');
     });
     //Popup nachträglich initialisieren
@@ -270,7 +273,11 @@ function initArmeeContainer(armeeObject){
     //Der Container
     $("div[data-role='content']").append('<div id="' + UNID + '" class="armee"><div class="armeeHeader"></div></div>');
     //Anzeige des Name
-    $("#" + UNID + " > div.armeeHeader").append('<div class="armeeName">' + ArmeeName + '</div>');
+    if(armeeObject.LongName !== null && armeeObject.LongName !== undefined && armeeObject.LongName !== ""){
+        $("#" + UNID + " > div.armeeHeader").append('<div class="armeeName">' + armeeObject.LongName + '</div>');
+    }else{
+        $("#" + UNID + " > div.armeeHeader").append('<div class="armeeName">' + ArmeeName + '</div>');
+    }
     //Anzeige der Formation, die ersten Formation ist das Hauptkontigent ansonsten eben Verbündetenkontigent
     $("#" + UNID + " > div.armeeHeader").append('<div class="armeeType" type="' + armeeObject.Type + '">(' + getNationalText(armeeObject.Type, "divArmeeType") + ')</div>');
     //Schaltfläche zum ändern der Formation
@@ -288,8 +295,11 @@ function initArmeeContainer(armeeObject){
     $('#' + UNID + " > div.groups").append('<div style="display: none;" class="group defence"><div class="ui-grid-b"><div class="ui-block-a groupName">' + getNationalText("groupTextDefence") + '()</div><div class="ui-block-b groupPoints">0 ' + getNationalText("divPointsText") + '</div></div></div>');
     $('#' + UNID + " > div.groups").append('<div style="display: none;" class="group hulk"><div class="ui-grid-b"><div class="ui-block-a groupName">' + getNationalText("groupTextHulk") + '()</div><div class="ui-block-b groupPoints">0 ' + getNationalText("divPointsText") + '</div></div></div>');
     //Für die Punkte der Armee
-    $("#" + UNID).append('<div class="armeeSummary">' + getNationalText("divSummaryPointsText") + ' ' + ArmeeName + ': 0</div>');
-    
+    if(armeeObject.LongName !== null && armeeObject.LongName !== undefined && armeeObject.LongName !== ""){
+        $("#" + UNID).append('<div class="armeeSummary">' + getNationalText("divSummaryPointsText") + ' ' + armeeObject.LongName + ': 0</div>');
+    }else{
+        $("#" + UNID).append('<div class="armeeSummary">' + getNationalText("divSummaryPointsText") + ' ' + ArmeeName + ': 0</div>');
+    }
     //Muss ich einfangen, um die ID zusetzen von wo aus der Dialog aufgerufen wird.
     $('#' + UNID + ' a[href="#changeArmee' + ArmeeName + '"]').click(function() {
         //Und es auf dem Change Dialog geben
@@ -328,6 +338,7 @@ function loadArmee(file){
     var newArmee = new Object();
     newArmee.UNID = UNID;
     newArmee.Name = armeeJson.name;
+    newArmee.LongName = armeeJson.longname;
     newArmee.File = file;
     //Festelgen um welchen Type es sich handelt
     var defaultFormations = getDefaultFormationJson();
@@ -339,6 +350,7 @@ function loadArmee(file){
     newArmee.storm = [];
     newArmee.support = [];
     newArmee.hulk = [];
+    newArmee.defence = [];
     //Zur Auswahl aller Selektierten Armee hinzufügen
     allSelectetArmees.push(newArmee);
     
@@ -413,7 +425,7 @@ function addUnit(unitToAdd){
     //Selektierte Armee erweitern, es wird nur die Auswahl gemerkt, die Punkte haben da nichts zu suchen
     var newUnit = new Object();
     newUnit.UNID = auswahlUNID;
-    newUnit.Name = auswahl.name;
+    newUnit.name = auswahl.name;
     allSelectetArmees[armeeIndex][groupname].push(newUnit);
     
     //Gruppe sichtbar machen
@@ -444,17 +456,11 @@ function addUnit(unitToAdd){
 function renderUnit(unitObject, codexUnit){
     //Dem erstellten Container die Werte mitgeben
     $('#' + unitObject.UNID).append('<div class="ui-grid-b unitHeader"></div>');
-    $('#' + unitObject.UNID + ' > div.unitHeader').append('<div class="ui-block-a selectionName">' + codexUnit.name + '</div>');
+    $('#' + unitObject.UNID + ' > div.unitHeader').append('<div class="ui-block-a selectionName">' + unitObject.name + '</div>');
+    //Standardpunkte setzen, das Endgültige Ergebnis wird am Ende berechnet
     $('#' + unitObject.UNID + ' > div.unitHeader').append('<div class="ui-block-b selectionPoints">' + codexUnit.cost + ' Punkte</div>');
     $('#' + unitObject.UNID + ' > div.unitHeader').append('<div class="ui-block-c"><a href="#" class="ui-btn ui-icon-edit ui-btn-icon-notext ui-shadow ui-corner-all" title="' + getNationalText("buttonChangeUnitTitle") + '"></a></div>');
     $('#' + unitObject.UNID).append('<div class="selectionOptions"></div>');
-    //Einheitenname ermitteln
-    var entityName = "";
-    if(codexUnit.entityName !== null && codexUnit.entityName !== undefined){
-        entityName = codexUnit.entityName;
-    }else{
-        entityName = codexUnit.name;
-    }
     //Einheitengröße ermittelt und ob die Anzeige zusammengefasst werden kann
     var unitSize = 0;
     var summary = false;
@@ -466,31 +472,39 @@ function renderUnit(unitObject, codexUnit){
         unitSize = codexUnit.minGroup;
     }
     //Ermitteln was zum Default hinzukommt.
-    if(unitObject.addToMin !== null && unitObject.addToMin !== undefined && unitObject.addToMin > 0){
+    if(unitObject.addToMin !== null && unitObject.addToMin !== undefined && unitSize > 0 && unitObject.addToMin > 0){
         unitSize = unitSize + unitObject.addToMin;
     }
-    //Wenn minGroup größer 1 ist, dann versuchen es zusammen zufassen
-    if(unitSize >= 1 && summary){
-        $('#' + unitObject.UNID + ' div.selectionOptions').append(unitSize + " x " + entityName + "<br />");
-    }else if(unitSize >= 1 && !summary){
-    //ansonten jede Einheit einzeiln auflisten
-        for(var i = 0; i < unitSize; i++){
-            $('#' + unitObject.UNID + ' div.selectionOptions').append(entityName + "<br />");
-        }
-    }else{
-    //Wenn es gar keine Größenangabe gibt dann ist es nur eine Einheit und die wird schon durch ihre Überschrift dargestellt, also nichts machen
-    
+    //Die Einheitenanzahl darf nicht das Maximum überschreiten
+    if(codexUnit.maxGroup !== null && codexUnit.maxGroup !== undefined && codexUnit.maxGroup > 0 && unitSize > codexUnit.maxGroup){
+        unitSize = codexUnit.maxGroup;
     }
-
-    //Die Optionen hinzufügen, TODO: Vielleicht in eigene Function auslagern
-    if(codexUnit.options !== null && codexUnit.options !== undefined && codexUnit.options.length > 0){
-        //Default Options Hinzufügen, der Rest geht über den Anpassen Dialog
+    
+    //Wenn keine Gruppe, dann ist es nur ein Element
+    var localUnitSize = unitSize>0?unitSize:1;
+    //Es erstmal nur intern Aufbauen und dann am Ende ins HTML schreiben
+    var localUnit = new Array(localUnitSize);
+    for(var i = 0; i < localUnitSize; i++){
+        localUnit[i] = new Object();
+        //Einheitenname ermitteln
+        if(codexUnit.entityName !== null && codexUnit.entityName !== undefined){
+            localUnit[i].name = codexUnit.entityName;
+        }else{
+            localUnit[i].name = unitObject.name;
+        }
+        //Einheitenkosten pro Model ermitteln
+        if(codexUnit.entityCost !== null && codexUnit.entityCost !== undefined){
+            localUnit[i].cost = codexUnit.entityCost;
+        }else if(codexUnit.cost !== null && codexUnit.cost !== undefined){
+            localUnit[i].cost = codexUnit.cost;
+        }
+        //Default Sachen für Model ermitteln
         $.each(codexUnit.options, function (counter, option) {
             //Wenn es eine Gruppen von Möglichkeiten sind, dann ist es ein Array. Brauch aber nur die Default Angabe
             if(Array.isArray(option)){
-                for (var i = 0; i < option.length; i++) {
-                    if(option[i].default !== null && option[i].default !== undefined && option[i].default === true){
-                        option = option[i];
+                for (var a = 0; a < option.length; a++) {
+                    if(option[a].default !== null && option[a].default !== undefined && option[a].default === true){
+                        option = option[a];
                         break;
                     }
                 }
@@ -501,20 +515,43 @@ function renderUnit(unitObject, codexUnit){
                  * außerdem dürfen es keine Listen sein oder Vorrausetzungen haben
                  */
                 if((option.lists === null || option.lists === undefined) && (option.requirement === null || option.requirement === undefined) && (option.cost === null || option.cost === undefined)){
-                    if(unitSize >= 1 && summary){
-                    //Zusammengefasst Anzeige
-                        $('#' + unitObject.UNID + ' div.selectionOptions').append("- " + unitSize + " x " + option.name + "<br />");
+                    if(option.min !== null && option.min !== undefined && option.min){
+                    //Eventuell mehr als eine Auswahl
+                        localUnit[i][option.name] = option.min + ";" + 0;
                     }else{
-                        if(option.min !== null && option.min !== undefined && option.min){
-                        //Mehrere als eine Auswahl
-                            $('#' + unitObject.UNID + ' div.selectionOptions').append("- " + option.min + " x " + option.name + "<br />");
-                        }else{
-                            $('#' + unitObject.UNID + ' div.selectionOptions').append("- " + option.name + "<br />");
-                        }
+                        localUnit[i][option.name] = 1 + ";" + 0;
                     }
                 }
             }
         });
+        //Gewählte Optionen für Model ermitteln
+        //TODO:
+    }
+
+    //Wenn minGroup größer 1 ist und es zusammen gefasst werden soll, dann versuchen es zusammen zufassen
+    if(unitSize >= 1 && summary){
+        //TODO:
+    }
+    //Interne Einheit durchgehen und rausschreiben
+    for(var i = 0; i < localUnitSize; i++){
+        //Wenn es gar keine Größenangabe gibt dann ist es nur eine Einheit und die wird schon durch ihre Überschrift dargestellt, also nur Optionen darstellen
+        if(unitSize >= 1){
+            var cost = localUnit[i]["cost"];
+            $('#' + unitObject.UNID + ' div.selectionOptions').append(localUnit[i]["name"] + "<br />");
+        }
+        //Optionen durchgehen
+        for (var property in localUnit[i]){
+            if(property !== "name" && property !== "cost"){
+                //Schauen ob es mehr als eine Auswahl gibt und die Kosten stehen hinten dran
+                var size = localUnit[i][property].split(";")[0];
+                var cost = localUnit[i][property].split(";")[1];
+                if(size > 1){
+                    $('#' + unitObject.UNID + ' div.selectionOptions').append("- " + size + " x " + property + "<br />");
+                }else{
+                    $('#' + unitObject.UNID + ' div.selectionOptions').append("- " + property + "<br />");
+                }
+            }
+        }
     }
 }
 

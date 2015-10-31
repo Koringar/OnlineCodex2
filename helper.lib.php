@@ -72,6 +72,7 @@ function getCodexIndexJson() {
     $content = json_decode(file_get_contents($codexDir . "/" . $file));
     $item = array();
     $item["name"] = $content->{"name"};
+    $item["longname"] = $content->{"longname"};
     $item["date"] = $content->{"date"};
     $item["version"] = $content->{"version"};
     $armee[$file] = $item;
