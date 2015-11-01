@@ -84,8 +84,8 @@ function checkCodexJson() {
 }
 
 function checkOption($option, $lastName, $file) {
-  if(!isset($option->{"name"})) {
-    godie("option has no name", $lastName, $file);
+  if(!isset($option->{"name"}) && !isset($option->{"lists"})) {
+    godie("option has no name and is not a list", $lastName, $file);
   }
   // TODO list
 }
