@@ -458,7 +458,7 @@ function renderUnit(unitObject, codexUnit){
     $('#' + unitObject.UNID).append('<div class="ui-grid-b unitHeader"></div>');
     $('#' + unitObject.UNID + ' > div.unitHeader').append('<div class="ui-block-a selectionName">' + unitObject.name + '</div>');
     //Standardpunkte setzen, das Endgültige Ergebnis wird am Ende berechnet
-    $('#' + unitObject.UNID + ' > div.unitHeader').append('<div class="ui-block-b selectionPoints">' + codexUnit.cost + ' Punkte</div>');
+    $('#' + unitObject.UNID + ' > div.unitHeader').append('<div class="ui-block-b selectionPoints">' + codexUnit.cost + ' ' + getNationalText("divPointsText") + '</div>');
     $('#' + unitObject.UNID + ' > div.unitHeader').append('<div class="ui-block-c"><a href="#" class="ui-btn ui-icon-edit ui-btn-icon-notext ui-shadow ui-corner-all" title="' + getNationalText("buttonChangeUnitTitle") + '"></a></div>');
     $('#' + unitObject.UNID).append('<div class="selectionOptions"></div>');
     //Einheitengröße ermittelt und ob die Anzeige zusammengefasst werden kann
@@ -486,17 +486,18 @@ function renderUnit(unitObject, codexUnit){
     var localUnit = new Array(localUnitSize);
     for(var i = 0; i < localUnitSize; i++){
         localUnit[i] = new Object();
-        //Einheitenname ermitteln
-        if(codexUnit.entityName !== null && codexUnit.entityName !== undefined){
-            localUnit[i].name = codexUnit.entityName;
-        }else{
-            localUnit[i].name = unitObject.name;
-        }
+        var entityCost;
         //Einheitenkosten pro Model ermitteln
         if(codexUnit.entityCost !== null && codexUnit.entityCost !== undefined){
-            localUnit[i].cost = codexUnit.entityCost;
+            entityCost = codexUnit.entityCost;
         }else if(codexUnit.cost !== null && codexUnit.cost !== undefined){
-            localUnit[i].cost = codexUnit.cost;
+            entityCost = codexUnit.cost;
+        }
+        //Einheitenname ermitteln
+        if(codexUnit.entityName !== null && codexUnit.entityName !== undefined){
+            localUnit[i][codexUnit.entityName] = 1 + ";" + entityCost;
+        }else{
+            localUnit[i][unitObject.name] = 1 + ";" + entityCost;
         }
         //Default Sachen für Model ermitteln
         $.each(codexUnit.options, function (counter, option) {
@@ -530,29 +531,64 @@ function renderUnit(unitObject, codexUnit){
 
     //Wenn minGroup größer 1 ist und es zusammen gefasst werden soll, dann versuchen es zusammen zufassen
     if(unitSize >= 1 && summary){
-        //TODO:
+        //Es wird alles zum ersten Object hinzugefügt, gehe alles Rückwerts durch damit es mit .pop() geht.
+        for(var i = localUnitSize-1; i > 0; i--){
+            for (var property in localUnit[i]){
+                var size = parseInt(localUnit[i][property].split(";")[0]);
+                var cost = parseInt(localUnit[i][property].split(";")[1]);
+                
+                //Schaue nach ob das erste Object das schon hat und zähle es dann hoch, ansonsten hinzufügen
+                if(localUnit[0][property] !== null && localUnit[0][property] !== undefined){
+                    var sumSize = parseInt(localUnit[0][property].split(";")[0]);
+                    var sumCost = parseInt(localUnit[0][property].split(";")[1]);
+                    
+                    sumSize = sumSize + size;
+                    sumCost = sumCost + cost;
+                    
+                    localUnit[0][property] = sumSize + ";" + sumCost;
+                }else{
+                    localUnit[0][property] = localUnit[i][property];
+                }
+            }
+            //Letztes Element entfernen
+            localUnit.pop();
+        }
     }
+    var sumCost = 0;
     //Interne Einheit durchgehen und rausschreiben
     for(var i = 0; i < localUnitSize; i++){
-        //Wenn es gar keine Größenangabe gibt dann ist es nur eine Einheit und die wird schon durch ihre Überschrift dargestellt, also nur Optionen darstellen
-        if(unitSize >= 1){
-            var cost = localUnit[i]["cost"];
-            $('#' + unitObject.UNID + ' div.selectionOptions').append(localUnit[i]["name"] + "<br />");
-        }
+        var isFirst = true;
         //Optionen durchgehen
         for (var property in localUnit[i]){
-            if(property !== "name" && property !== "cost"){
-                //Schauen ob es mehr als eine Auswahl gibt und die Kosten stehen hinten dran
-                var size = localUnit[i][property].split(";")[0];
-                var cost = localUnit[i][property].split(";")[1];
+            //Schauen ob es mehr als eine Auswahl gibt und die Kosten stehen hinten dran
+            var size = localUnit[i][property].split(";")[0];
+            var cost = parseInt(localUnit[i][property].split(";")[1]);
+            
+            //Alle Kosten zusammen zählen
+            sumCost = sumCost + cost;
+            //Im ersten Object ist der Name des Modell
+            if(isFirst){
+                //Wenn es gar keine Größenangabe gibt dann ist es nur eine Einheit und die wird schon durch ihre Überschrift dargestellt, also nur Optionen darstellen
+                if(unitSize >= 1){
+                    if(size > 1){
+                        $('#' + unitObject.UNID + ' div.selectionOptions').append(size + " x " + property + "<br />");
+                    }else{
+                        $('#' + unitObject.UNID + ' div.selectionOptions').append(property + "<br />");
+                    }
+                }
+            }else{
                 if(size > 1){
                     $('#' + unitObject.UNID + ' div.selectionOptions').append("- " + size + " x " + property + "<br />");
                 }else{
                     $('#' + unitObject.UNID + ' div.selectionOptions').append("- " + property + "<br />");
                 }
             }
+            
+            isFirst = false;
         }
     }
+    //Das Ergebnis aller Kosten rausschreiben
+    $('#' + unitObject.UNID + ' > div.unitHeader > div.selectionPoints').html(sumCost + ' ' + getNationalText("divPointsText"));
 }
 
 /*
