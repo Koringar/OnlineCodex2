@@ -21,37 +21,59 @@ function checkCodexJson() {
       foreach ($group as $entity) {
         // check name
         if(!isset($entity->{"name"})) {
-          godie("entity name not set after entity $file:$lastName");
+          godie("entity name not set after entity", $lastName, $file);
         } else {
           $lastName = $entity->{"name"};
         }
         // check cost
         if(!isset($entity->{"cost"})) {
-          godie("free as freebeer for $file:$lastName");
+          godie("entity don't has cost", $lastName, $file);
         }
         if(isset($entity->{"note"})) {
-          echo  "note on $file:$lastName: " . $entity->{"note"} . "\n";
+          warn("note: " . $entity->{"note"}, $lastName, $file);
         }
         // check minGroup <= maxGroup
         if(isset($entity->{"minGroup"}) || isset($entity->{"maxGroup"})) {
           // min and max exists
           if(!isset($entity->{"minGroup"})) {
-            godie("minGroup not set in $file:$lastName");
+            godie("minGroup not set", $lastName, $file);
           }
           if(!isset($entity->{"maxGroup"})) {
-            godie("maxGroup not set in $file:$lastName");
+            godie("maxGroup not set", $lastName, $file);
           }
           // min <= max
           if($entity->{"minGroup"} > $entity->{"maxGroup"}) {
-            godie("minGroup greater as maxGroup in $file:$lastName");
+            godie("minGroup greater as maxGroup", $lastName, $file);
           }
           // more cost more
           if(!isset($entity->{"entityCost"})) {
-            godie("no entity Cost in $file:$lastName");
+            godie("no entity Cost", $lastName, $file);
           }
         }
-        // TODO "options"
-        // TODO "attach"
+        // "options"
+        if(isset($entity->{"options"})) {
+          $options = $entity->{"options"};
+          foreach ($options as $option) {
+            if(is_array($option)) {
+              foreach ($option as $o) {
+                checkOption($o, $lastName, $file);
+              }
+            } else {
+              checkOption($option, $lastName, $file);
+            }
+          }
+        } else {
+          warn("entity has no options", $lastName, $file);
+        }
+        // "attach"
+        if(isset($entity->{"attach"})) {
+          foreach ($entity->{"attach"} as $attach) {
+            $attachName = $attach->{"name"};
+            if(!in_array($attachName, $names)) {
+              godie("attach name \"$attachName\" not found", $lastName, $file);
+            }
+          }
+        }
       }
     }
     
@@ -59,6 +81,13 @@ function checkCodexJson() {
     // default = cost: 0
     // note: todo = print warning
   }
+}
+
+function checkOption($option, $lastName, $file) {
+  if(!isset($option->{"name"})) {
+    godie("option has no name", $lastName, $file);
+  }
+  // TODO list
 }
 
 function getCodexIndexJson() {
@@ -79,9 +108,13 @@ function getCodexIndexJson() {
   return json_encode($armee);
 }
 
-function godie($msg) {
-  echo "$msg\n";
+function godie($msg, $name, $file) {
+  echo "ERROE: $msg => \"" . $file . "\":\"" . $name ."\"\n";
   exit(1);
+}
+
+function warn($msg, $name, $file) {
+  echo "WARN: $msg => \"" . $file . "\":\"" . $name ."\"\n";
 }
 
 function minJson($infile, $outfile) {

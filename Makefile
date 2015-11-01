@@ -73,7 +73,3 @@ clean:
 .PHONY: checkCodexJson
 checkCodexJson:
 	$(PHP) helper.php checkCodexJson
-	
-.PHONY: test
-test:
-	echo $(LANG)
