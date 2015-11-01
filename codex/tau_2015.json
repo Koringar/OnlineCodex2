@@ -1,0 +1,628 @@
+{
+    "name": "Tau",
+    "longname": "Tau Empire",
+    "version": 7,
+    "date": "2015-10-31 19:51",
+    "optionLists": {
+        "drones": [
+            {"name": "MV1 Gun Drone", "cost": 12},
+            {"name": "MV4 Shield Drone", "cost": 12},
+            {"name": "MV7 Marker Drone", "cost": 12},
+            {"name": "MV8 Missile Drone", "cost": 12, "requirement": "Broadside"},
+            {"name": "MV36 Guardian Drone", "cost": 12, "requirement": "Shas'ui"}
+        ],
+        "ranged": [
+            {"name": "Flammenwerfer", "cost": 5, "syncCost": 5},
+            {"name": "Bündelkanone", "cost": 10, "syncCost": 5},
+            {"name": "Streugranatwerfer", "cost": 15},
+            {"name": "Zyklionischer Ionenblaster", "cost": 15},
+            {"name": "Fusionsblaster", "cost": 15, "syncCost": 5},
+            {"name": "Plasmagewehr", "cost": 15, "syncCost": 5},
+            {"name": "Raketenmagazin", "cost": 15, "syncCost": 5}
+        ],
+        "signature": [
+            {"name": "Waffenstörfeldemitter", "cost": 2, "single": "armee"},
+            {"name": "Onager-Handschuh", "cost": 5, "single": "armee"},
+            {"name": "Repulsor-Stoßfeldemitter", "cost": 10, "single": "armee"},
+            {"name": "Selbzerstörungssystem", "cost": 10, "single": "armee"},
+            {"name": "Kammando-Kontroll-Modul", "cost": 15, "single": "armee"},
+            {"name": "Puretide-Engrammneurochip", "cost": 15, "single": "armee"},
+            {"name": "Multispektrum-Sensorpaket", "cost": 20, "single": "armee"},
+            {"name": "XV8-02 Crisis Battlesuit 'Iridium'", "cost": 25, "single": "armee"}
+        ],
+        "support": [
+            {"name": "Hochentwickeltes Zielsystem", "cost": 3},
+            {"name": "Gegenfeuer-Abwehrsystem", "cost": 5},
+            {"name": "Frühwarn-Reaktivsystem", "cost": 5},
+            {"name": "Positionssender", "cost": 5},
+            {"name": "Multiple Zielerfassung", "cost": 5},
+            {"name": "Schubumkehrdüsen", "cost": 5},
+            {"name": "Drohnen-Steuerung", "cost": 8},
+            {"name": "Stimulanzinjektor", "cost": 15},
+            {"name": "Luftverfolger", "cost": 20},
+            {"name": "Schildgenerator", "cost": 25}
+        ],
+        "vehicle": [
+            {"name": "Filteroptik", "cost": 1},
+            {"name": "Ködersystem", "cost": 3},
+            {"name": "Automatisches Reparatursystem", "cost": 5},
+            {"name": "Fahrzeugsensorik", "cost": 5},
+            {"name": "Flechettewerfer", "cost": 10},
+            {"name": "Hochentwickeltes Zielsystem", "cost": 10},
+            {"name": "Punktverteidigungs-Zielrelais", "cost": 10},
+            {"name": "Störsystem", "cost": 15}
+        ]
+    },
+    "groups": {
+        "HQ": [
+          {
+            "name": "Ethereal",
+            "cost": 50,
+            "options": [
+                [
+                    {"name": "Himmelsklinge", "cost": 5},
+                    {"name": "Ausgleicher", "cost": 10, "min": 2}
+                ],
+                {"name": "Filteroptik", "cost": 5},
+                {"name": "Hover Drone", "cost": 5},
+                {"name": "Signalgeber", "cost": 5},
+                {"name": "Späherrüstung", "cost": 5},
+                {"lists": "drones", "quantity": 2}
+            ]
+          },
+          {
+            "name": "Cadre Fireblade",
+            "cost": 60,
+            "options": [
+                {"name": "Pulsgewehr"},
+                {"name": "Photonengranaten"},
+                {"name": "Zielmarkierer"},
+                {"lists": "drones", "quantity": 2}
+            ]
+          },
+          {
+            "name": "Commander",
+            "cost": 85,
+            "options": [
+                [
+                    {"name": "Crisis Battlesuit", "default": true},
+                    {"name": "XV86 Goldstar Battlesuit", "cost": 60}
+                ],
+                [
+                    {"lists": "ranged, support", "quantity": 4, "requirement": "Crisis Battlesuit"},
+                    {"lists": "support", "quantity": 2, "requirement": "XV86 Goldstar Battlesuit"}
+                ],                
+                {"lists": "signature", "requirement": "Crisis Battlesuit"},
+                {"lists": "drones", "quantity": 2},
+                {"name": "Hochleistungsbündelkanone", "requirement": "XV86 Goldstar Battlesuit"},
+                {"name": "Raketenmagazin", "requirement": "XV86 Goldstar Battlesuit"}
+            ]
+          },
+          {
+            "name": "Darkstrider",
+            "cost": 100,
+            "single": "armee",
+            "options": [
+                {"name": "Pulskarabiner"},
+                {"name": "Photonengranaten"},
+                {"name": "Filteroptik"},
+                {"name": "Zielmarkierer"}
+            ]
+          },
+          {
+            "name": "Aun'va",
+            "single": "armee",
+            "cost": 100,
+            "options": [
+                {"name": "Ethereal Guard", "min": 2},
+                {"name": "Himmelsklinge", "requirement": "Ethereal Guard"},
+                {"name": "Photonengranaten", "requirement": "Ethereal Guard"},
+                {"name": "Ritual des Klingenbundes", "min": "all", "requirement": "Ethereal Guard"}
+            ]
+          },
+          {
+            "name": "Aun'shi",
+            "single": "armee",
+            "cost": 110,
+            "options": [
+                {"name": "Himmelsklinge"},
+                {"name": "EMP-Granaten"},
+                {"name": "Photonengranaten"},
+                {"name": "Schildgenerator"}
+            ]
+          },
+          {
+            "name": "Commander Shadowsun",
+            "cost": 135,
+            "single": "armee",
+            "options": [
+                {"name": "Fusionsblaster", "min": 2},
+                {"name": "Multiple Zielerfassung"},
+                {"name": "MV52 Shielddrone", "cost": 20, "quantity": 2},
+                {"name": "MV62 Command-link Drone", "cost": 20}
+            ]
+          },
+          {
+            "name": "Commander Farsight",
+            "cost": 165,
+            "single": "armee",
+            "options": [
+                {"name": "Crisis Battlesuit"},
+                {"name": "Plasmagewehr"},
+                {"name": "Schildgenerator"},
+                {"name": "Klinge Morgengrauen"}
+            ]
+          }
+        ],
+        "elite": [
+          {
+            "name": "XV8 Crisis Battlesuits",
+            "cost": 22,
+            "minGroup": 1,
+            "maxGroup": 9,
+            "entityCost": 22,
+            "entityName": "Crisis Shas'ui",
+            "options":[
+                {"name": "Crisis Battlesuit"},
+                {"lists": "ranged, support", "quantity": 3},
+                {"name": "Shas'vre", "cost": 10, "quantity": 1},
+                {"lists": "ranged, support, signature", "quantity": 3},
+                {"lists": "drones", "quantity": 2, "requirement": "Shas'vre"},
+                {"name": "Ritual des Klingenbundes", "cost": 1, "min": "all"}
+            ]
+          },
+          {
+            "name": "XV8 Crisis Bodyguards",
+            "cost": 32,
+            "minGroup": 1,
+            "maxGroup": 9,
+            "entityCost": 32,
+            "entityName": "Crisis Bodyguards",
+            "options":[
+                {"name": "Crisis Battlesuit"},
+                {"lists": "ranged, support", "quantity": 3},
+                {"lists": "signature"},
+                {"lists": "drones", "quantity": 2},
+                {"name": "Ritual des Klingenbundes", "cost": 1, "min": "all"}
+            ]
+          },
+          {
+            "name": "XV25 Stealth Battlesuits",
+            "cost": 90,
+            "minGroup": 3,
+            "maxGroup": 6,
+            "entityCost": 30,
+            "entityName": "Stealth Shas'ui",
+            "options":[
+                {"name": "Stealth Battlesuit"},
+                [
+                    {"name": "Bündelkanone", "default": true},
+                    {"name": "Fusionsblaster", "cost": 5, "requirement": 3}
+                ],
+                {"lists": "support", "quantity": 1},
+                {"name": "Shas'vre", "cost": 10, "quantity": 1},
+                {"lists": "support", "quantity": 2, "requirement": "Shas'vre"},
+                {"name": "Signalgeber", "cost": 10, "requirement": "Shas'vre"},
+                {"name": "Zielmarkierer & Multiple Zielerfassung", "cost": 5, "requirement": "Shas'vre"},
+                {"lists": "drones", "quantity": 2, "requirement": "Shas'vre"},
+                {"name": "Ritual des Klingenbundes", "cost": 1, "min": "all"}
+            ]
+          },
+          {
+            "name": "XV95 Ghostkeel Battlesuits",
+            "cost": 130,
+            "minGroup": 1,
+            "maxGroup": 3,
+            "entityCost": 130,
+            "entityName": "Ghostkeel Shas'vre",
+            "options":[
+                {"name": "Ghostkeel Battlesuit"},
+                [
+                        {"name": "Fusionskanone", "default": true},
+                        {"name": "Zyklischen Ionensturmbolter", "cost": 0}
+                ],
+                {"name": "Ghostkeel-Sesorangriffspaket"},
+                {"name": "Holophotonen-Gegenmaßnahmen"},
+                [
+                        {"name": "Synchronisierter Flammenwerfer", "default": true},
+                        {"name": "Synchronisierte Bündelkanone", "cost": 5},
+                        {"name": "Synchronisierter Fusionsblaster", "cost": 10}
+                ],
+                {"name": "MV5 Stealth Drones", "min": 2},
+                {"lists": "support", "quantity": 2},
+                {"name": "Ritual des Klingenbundes", "cost": 1, "min": "all"}
+            ]
+          },
+          {
+            "name": "XV104 Riptide Battlesuits",
+            "cost": 180,
+            "minGroup": 1,
+            "maxGroup": 3,
+            "entityCost": 180,
+            "entityName": "Riptide Shas'vre",
+            "options":[
+                {"name": "Riptide Battlesuit"},
+                [
+                        {"name": "Schwere Bündelkanone", "default": true},
+                        {"name": "Ionenbeschleuniger", "cost": 5}
+                ],
+                [
+                        {"name": "Synchronisiertes Schwärmer-Raketensystem", "default": true},
+                        {"name": "Synchronisiertes Plasmagewehr", "cost": 0},
+                        {"name": "Synchronisierter Fusionsblaster", "cost": 0}
+                ],
+                {"name": "Riptide-Schildgenerator"},
+                {"name": "Novareaktor"},
+                {"name": "Shield Missile Drones", "cost": 25, "quantity": 2},
+                {"lists": "support", "quantity": 2},
+                {"name": "Ritual des Klingenbundes", "cost": 1, "min": "all"}
+            ]
+          }
+        ],
+        "default": [
+            {
+            "name": "Strike Team",
+            "cost": 45,
+            "minGroup": 5,
+            "maxGroup": 12,
+            "entityCost": 9,
+            "entityName": "Fire Warrior",
+            "options": [
+                [
+                    {"name": "Pulsgewehr", "default": true},
+                    {"name": "Pulskarabiner", "cost": 0}
+                ],
+                {"name": "Photonengranaten"},
+                {"name": "Shas'ui", "cost": 10, "quantity": 1},
+                {"name": "Zielmarkierer & Multiple Zielerfassung", "cost": 15, "requirement": "Shas'ui"},
+                {"lists": "drones", "quantity": 2, "requirement": "Shas'ui"},
+                {"name": "EMP-Granaten", "cost": 2, "min": "all"},
+                {"name": "Taktischer Unterstützungsturm DS8", "cost": 10, "quantity": 1},
+                {"name": "Ritual des Klingenbundes", "cost": 1, "min": "all"}
+            ],
+            "attach": [
+                {"name": "TY7 Teufelsrochen"}
+            ]
+          },
+          {
+            "name": "Breacher Team",
+            "cost": 45,
+            "minGroup": 5,
+            "maxGroup": 10,
+            "entityCost": 9,
+            "entityName": "Fire Warrior",
+            "options": [
+                {"name": "Pulsblaster"},
+                {"name": "Feldverstärker-Relais"},
+                {"name": "Photonengranaten"},
+                {"name": "Shas'ui", "cost": 10, "quantity": 1},
+                {"name": "Zielmarkierer & Multiple Zielerfassung", "cost": 15, "requirement": "Shas'ui"},
+                {"lists": "drones", "quantity": 2, "requirement": "Shas'ui"},
+                {"name": "EMP-Granaten", "cost": 2, "min": "all"},
+                {"name": "Taktischer Unterstützungsturm DS8", "cost": 10, "quantity": 1},
+                {"name": "Ritual des Klingenbundes", "cost": 1, "min": "all"}
+            ],
+            "attach": [
+                {"name": "TY7 Teufelsrochen"}
+            ]
+          },
+          {
+            "name": "Kroot Carnivores",
+            "cost": 60,
+            "minGroup": 10,
+            "maxGroup": 20,
+            "entityCost": 6,
+            "entityName": "Kroot",
+            "options": [
+                [
+                    {"name": "Kroot-Langbüchse mit Pulsmunition", "default": true},
+                    {"name": "Kroot-Langbüchse mit Jagdmunition", "cost": 1, "min": "all"},
+                    {"name": "Pulsgewehr", "cost": 0, "requirement": "Shaper"},
+                    {"name": "Pulskarabiner", "cost": 0, "requirement": "Shaper"}
+                ],
+                {"name": "Krootox Rider", "cost": 25, "quantity": 3},
+                {"name": "Krootbüchse", "requirement": "Krootox Rider"},
+                {"name": "Kroot Hound", "cost": 5, "quantity": 10},
+                {"name": "Shaper", "cost": 10, "quantity": 1}
+            ]
+          }
+        ],
+        "storm": [
+          {
+            "name": "TX4 Piranhas",
+            "cost": 40,
+            "minGroup": 1,
+            "maxGroup": 5,
+            "entityCost": 40,
+            "entityName": "TX4 Piranha",
+            "options": [
+                [
+                    [
+                        {"name": "Bündelkanone", "default": true},
+                        {"name": "Fusionsblaster", "cost": 10}
+                    ],
+                    {"name": "MV1 Gun Drone", "min": 2},
+                    {"name": "Lenkrakete", "cost": 8, "quantity": 2},
+                    {"lists": "vehicle"}
+                ]
+            ]
+          },
+          {
+            "name": "Pathfinder Team",
+            "cost": 44,
+            "minGroup": 4,
+            "maxGroup": 10,
+            "entityCost": 11,
+            "entityName": "Pathfinder",
+            "options": [
+                [
+                    {"name": "Pulskarabiner mit Zielmarkierer", "default": true},
+                    {"name": "Ionengewehr", "cost": 10, "max": 3},
+                    {"name": "Massebeleunigergewehr", "cost": 15, "max": 3}
+                ],
+                {"name": "Photonengranaten"},
+                {"name": "MB3 Recon Drone", "cost": 28, "quantity": 1},
+                {"name": "MV31 Puls Accelerator Drone", "cost": 15, "quantity": 1},
+                {"name": "MV33 Grav-inhibitor Drone", "cost": 15, "quantity": 1},
+                {"name": "EMP-Granaten", "cost": 2, "min": "all"},
+                {"name": "Shas'ui", "cost": 10, "quantity": 1},
+                {"lists": "drones", "quantity": 2, "requirement": "Shas'ui"},
+                {"name": "Ritual des Klingenbundes", "cost": 1, "min": "all"}
+            ],
+            "attach": [
+                {"name": "TY7 Teufelsrochen"}
+            ]
+          },
+          {
+            "name": "Drones",
+            "cost": 56,
+            "minGroup": 4,
+            "maxGroup": 12,
+            "entityCost": 14,
+            "entityName": "MV1 Gun Drone",
+            "options": [
+                [
+                    {"name": "MV4 Shield Drone", "cost": 0},
+                    {"name": "MV7 Marker Drone", "cost": 0}
+                ]
+            ]
+          },
+          {
+            "name": "Sniper Drone Team",
+            "cost": 58,
+            "minGroup": 1,
+            "maxGroup": 4,
+            "entityCost": 13,
+            "entityName": "Firesight Marksman",
+            "options": [
+                {"name": "Pulspistole"},
+                {"name": "Drone-Steuerung"},
+                {"name": "Zielmarkierer"},
+                {"name": "MV71 Sniper Drone", "min": 3},
+                {"name": "MV71 Sniper Drone", "cost": 15, "max": 6}
+            ]
+          },
+          {
+            "name": "Vespid Stingwings",
+            "cost": 72,
+            "minGroup": 4,
+            "maxGroup": 12,
+            "entityCost": 14,
+            "entityName": "Vespid Stingwing",
+            "options": [
+                {"name": "Neutronblaster"},
+                {"name": "Vespid Strain Leader", "cost": 10, "quantity": 1}
+            ]
+          },
+          {
+            "name": "TY7 Devilfish",
+            "cost": 80,
+            "options": [
+                {"name": "Bündelkanone"},
+                [
+                    {"name": "MV1 Gun Drone", "min": 2},
+                    {"name": "Synchronisiertes Schwärmer-Raketensystem", "cost": 10}
+                ],
+                {"name": "Lenkrakete", "cost": 8, "quantity": 2},
+                {"lists": "vehicle"}
+            ]
+          },
+          {
+            "name": "AX3 Razorshark Strike Fighter",
+            "cost": 145,
+            "options": [
+                [
+                    {"name": "Bündelkanone", "default": true},
+                    {"name": "Raketensystem", "cost": 5}
+                ],
+                {"name": "Ionen-Vierlingturm"},
+                {"name": "Lenkrakete", "min": 2},
+                {"lists": "vehicle"}
+            ]
+          },
+          {
+            "name": "AX39 Sun Shark Bomber",
+            "cost": 160,
+            "options": [
+                {"name": "Pulsbombengenerator"},
+                [
+                    {"name": "Raketensystem", "default": true},
+                    {"name": "Synchronisiertes Raketensystem", "cost": 5}
+                ],
+                {"name": "Vernetzter Zielmarkierer"},
+                {"name": "Lenkrakete", "min": 2},
+                {"name": "MV17 Intercptor Drone", "min": 2},
+                {"lists": "vehicle"}
+            ]
+          }
+        ],
+        "support": [
+          {
+            "name": "XV88 Broadside Battlesuits",
+            "cost": 65,
+            "minGroup": 1,
+            "maxGroup": 3,
+            "entityCost": 65,
+            "entityName": "Broadside Shas'ui",
+            "options": [
+                {"name": "Broadside Battlesuit"},
+                [
+                        {"name": "Synchronisiertes Schweres Massebeschleunigergewehr", "default": true},
+                        {"name": "Hochleistungsraketenmagazin", "cost": 0}
+                ],
+                [
+                        {"name": "Synchronisiertes Schwärmer-Raketensystem", "default": true},
+                        {"name": "Synchronisiertes Plasmagewehr", "cost": 0}
+                ],
+                {"name": "Shas'vre", "cost": 10, "quantity": 1},
+                {"name": "Lenkrakete", "cost": 8, "quantity": 1},
+                {"lists": "support", "quantity": 1},
+                {"lists": "drones", "quantity": 2},
+                {"name": "Ritual des Klingenbundes", "cost": 1, "min": "all"}
+            ]
+          },
+          {
+            "name": "TX78 Sky Ray Gunships",
+            "cost": 115,
+            "minGroup": 1,
+            "maxGroup": 3,
+            "entityCost": 115,
+            "entityName": "TX78 Sky Ray Gunship",
+            "options": [
+                {"name": "Lenkrakete", "min": 6},
+                {"name": "Vernetzter Zielmarkierer", "min": 2},
+                {"name": "Luftzielverfolger"},
+                [
+                    {"name": "MV1 Gun Drone", "min": 2, "default": true},
+                    {"name": "Synchronisiertes Bündelkanone", "cost": 0},
+                    {"name": "Synchronisiertes Schwärmer-Raketensystem", "cost": 0}
+                ],
+                {"lists": "vehicle"}
+            ]
+          },
+          {
+            "name": "TX9 Hammerhead Gunships",
+            "cost": 125,
+            "minGroup": 1,
+            "maxGroup": 3,
+            "entityCost": 125,
+            "entityName": "TX9 Hammerhead Gunship",
+            "options": [
+                [
+                    {"name": "Massebeleuniger mit Massivgeschossen", "default": true},
+                    {"name": "Massebeleuniger mit Massivgeschossen & Streugeschoss", "cost": 5},
+                    {"name": "Ionenkanone", "cost": 0}
+                ],
+                [
+                    {"name": "MV1 Gun Drone", "min": 2, "default": true},
+                    {"name": "Synchronisiertes Bündelkanone", "cost": 0},
+                    {"name": "Synchronisiertes Schwärmer-Raketensystem", "cost": 0}
+                ],
+                {"name": "Lenkrakete", "cost": 8, "quantity": 2},
+                {"lists": "vehicle"},
+                {"name": "Longstrike", "cost": 45, "single": "armee"}
+            ]
+          }
+        ],
+        "hulk": [
+          {
+            "name": "KV128 Stormsurges",
+            "cost": 360,
+            "minGroup": 1,
+            "maxGroup": 3,
+            "entityCost": 360,
+            "entityName": "KV128 Stormsurge",
+            "options": [
+                [
+                        {"name": "Pulsblasterkanone", "default": true},
+                        {"name": "Pulsbeschleunigerkanone", "cost": 15}
+                ],
+                {"name": "Synchronisierter Schwärmer-Raketensystem"},
+                {"name": "Raketenbatteriensystem"},
+                {"name": "Zerstörerraketen", "min": 4},
+                [
+                        {"name": "Synchronisierter Flammenwerfer", "default": true},
+                        {"name": "Synchronisierter Bündelkanone", "cost": 5},
+                        {"name": "Synchronisierter Streugranatwerfer", "cost": 5}
+                ],
+                {"lists": "support", "quantity": 2}
+            ]
+          },
+          {
+            "name": "KX139 Ta’unar Supremacy Armour",
+            "cost": 600,
+            "options": [
+                {"name": "One pulse ordnance multi-driver system"},
+                {"name": "Vigilance defence system"},
+                {"name": "Barrier shield generator"},
+                [
+                        {"name": "Two arm-mounted tri-axis ion cannon", "default": true},
+                        {"name": "Tri-axis ion cannon & fusion eradicator", "cost": 0}
+                ]
+            ]
+          }
+        ],
+        "defence":[
+            {"name": "Tidewall Shieldline", "cost": 60},
+            {
+                "name": "Tidewall Droneport", 
+                "cost": 60,
+                "options": [
+                    [
+                        {"name": "MV1 Gun Drone", "min": 4, "default": true},
+                        {"name": "MV4 Shield Drone", "cost": 0},
+                        {"name": "MV7 Marker Drone", "cost": 0}
+                    ]
+                ]
+            },
+            {
+                "name": "Tidewall Gunrig",
+                "cost": 85,
+                "options": [
+                    {"name": "Synchronisierter Massebeleuniger mit Massivgeschossen & Streugeschoss"}
+                ]
+            }
+        ]
+    },
+    "formations": [
+            {
+                "name": "Contigent-Kommando"
+            },
+            {
+                "name": "Hunter Cadre"
+            },
+            {
+                "name": "Retaliation Cadre"
+            },
+            {
+                "name": "Heavy Retribution Cadre"
+            },
+            {
+                "name": "Infiltration Cadre"
+            },
+            {
+                "name": "Optimised Stealth Cadre"
+            },
+            {
+                "name": "Firebase Support Cadre"
+            },
+            {
+                "name": "Armoured Interdiction Cadre"
+            },
+            {
+                "name": "Air Support Cadre"
+            },
+            {
+                "name": "Allied Advanced Cadre"
+            },
+            {
+                "name": "Tidewall Counterstrike Cadre"
+            },
+            {
+                "name": "Tidewall Cunfort"
+            },
+            {
+                "name": "Defence Network"
+            }
+    ]
+}
