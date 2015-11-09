@@ -1,8 +1,8 @@
 {
     "name": "Default Formations",
-    "version": 1,
-    "date": "2015-10-28 18:06",
-    "formations": [
+    "version": 2,
+    "date": "2015-11-09 20:03",
+    "contingent": [
         {
             "name": "main",
             "HQ": [

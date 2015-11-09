@@ -380,6 +380,7 @@
             "entityName": "MV1 Gun Drone",
             "options": [
                 [
+                    {"name": "MV1 Gun Drone", "cost": 0},
                     {"name": "MV4 Shield Drone", "cost": 0},
                     {"name": "MV7 Marker Drone", "cost": 0}
                 ]
@@ -584,9 +585,6 @@
     },
     "formations": [
             {
-                "name": "Contigent-Kommando"
-            },
-            {
                 "name": "Hunter Cadre"
             },
             {
@@ -622,5 +620,8 @@
             {
                 "name": "Defence Network"
             }
+    ],
+    "contingent": [
+        {"name": "Hunter Contigent"}
     ]
 }

@@ -88,3 +88,9 @@ div.popupTable{
    text-align: right;
    width: 10%;
 }
+.popupUnitSize{
+    display: flex;
+}
+.popupFooter{
+    display: flex;
+}
