@@ -7,7 +7,7 @@ TOCOMPILE := codex/index.json
 INDEX := index
 CODEX := $(wildcard codex/*.json)
 LANG := $(wildcard language/*.json)
-DIRS := $(TARGET) $(TARGET)/codex $(TARGET)/js $(TARGET)/js/libs \
+DIRS := $(TARGET)/codex $(TARGET)/js $(TARGET)/js/libs \
 	$(TARGET)/js/libs/jquery $(TARGET)/js/libs/jquery-mobile \
 	$(TARGET)/js/libs/jquery-mobile/images $(TARGET)/css \
 	$(TARGET)/language
@@ -20,15 +20,14 @@ CODEXTARGET := $(addprefix $(TARGET)/, $(CODEX))
 LANGTARGET := $(addprefix $(TARGET)/, $(LANG))
 CACHEMANIFEST := $(addprefix $(TARGET)/, cache.manifest)
 
-ifeq ($(OS), Windows_NT)
-  RM := rmdir
-  CP := xcopy
-  PHP := php.exe
-else
-  RM := rm -rf
-  CP := cp
-  PHP := php
-endif
+# Wird beim clean entfernt
+TOCLEAN := $(TOCOPYTARGET) $(TOCOMPILETARGET) $(INDEXTARGET) $(CODEXTARGET) \
+	$(LANGTARGET) $(CACHEMANIFEST) $(DIRS)
+
+# Programme
+RM := rm -rf
+CP := cp
+PHP := php
 
 .PHONY: all
 all: $(TOCOMPILETARGET) $(TOCOPYTARGET) \
@@ -68,7 +67,7 @@ $(TARGET):
 	
 .PHONY: clean
 clean:
-	$(RM) $(TARGET)
+	$(RM) $(TOCLEAN)
 
 .PHONY: checkCodexJson
 checkCodexJson:
