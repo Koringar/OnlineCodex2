@@ -67,7 +67,7 @@
                 {"name": "Hover Drone", "cost": 5},
                 {"name": "Signalgeber", "cost": 5},
                 {"name": "Späherrüstung", "cost": 5},
-                {"lists": "drones", "quantity": 2}
+                {"lists": ["drones"], "quantity": 2}
             ]
           },
           {
@@ -77,7 +77,7 @@
                 {"name": "Pulsgewehr"},
                 {"name": "Photonengranaten"},
                 {"name": "Zielmarkierer"},
-                {"lists": "drones", "quantity": 2}
+                {"lists": ["drones"], "quantity": 2}
             ]
           },
           {
@@ -89,11 +89,11 @@
                     {"name": "XV86 Goldstar Battlesuit", "cost": 60}
                 ],
                 [
-                    {"lists": "ranged, support", "quantity": 4, "requirement": "Crisis Battlesuit"},
-                    {"lists": "support", "quantity": 2, "requirement": "XV86 Goldstar Battlesuit"}
+                    {"lists": ["ranged", "support"], "quantity": 4, "requirement": "Crisis Battlesuit"},
+                    {"lists": ["support"], "quantity": 2, "requirement": "XV86 Goldstar Battlesuit"}
                 ],                
-                {"lists": "signature", "requirement": "Crisis Battlesuit"},
-                {"lists": "drones", "quantity": 2},
+                {"lists": ["signature"], "requirement": "Crisis Battlesuit"},
+                {"lists": ["drones"], "quantity": 2},
                 {"name": "Hochleistungsbündelkanone", "requirement": "XV86 Goldstar Battlesuit"},
                 {"name": "Raketenmagazin", "requirement": "XV86 Goldstar Battlesuit"}
             ]
@@ -117,7 +117,7 @@
                 {"name": "Ethereal Guard", "min": 2},
                 {"name": "Himmelsklinge", "requirement": "Ethereal Guard"},
                 {"name": "Photonengranaten", "requirement": "Ethereal Guard"},
-                {"name": "Ritual des Klingenbundes", "min": "all", "requirement": "Ethereal Guard"}
+                {"name": "Ritual des Klingenbundes", "min": "all"}
             ]
           },
           {
@@ -164,10 +164,10 @@
             "entityName": "Crisis Shas'ui",
             "options":[
                 {"name": "Crisis Battlesuit"},
-                {"lists": "ranged, support", "quantity": 3},
+                {"lists": ["ranged", "support"], "quantity": 3},
                 {"name": "Shas'vre", "cost": 10, "quantity": 1},
-                {"lists": "ranged, support, signature", "quantity": 3},
-                {"lists": "drones", "quantity": 2, "requirement": "Shas'vre"},
+                {"lists": ["ranged", "support", "signature"], "quantity": 3},
+                {"lists": ["drones"], "quantity": 2, "requirement": "Shas'vre"},
                 {"name": "Ritual des Klingenbundes", "cost": 1, "min": "all"}
             ]
           },
@@ -180,9 +180,9 @@
             "entityName": "Crisis Bodyguards",
             "options":[
                 {"name": "Crisis Battlesuit"},
-                {"lists": "ranged, support", "quantity": 3},
-                {"lists": "signature"},
-                {"lists": "drones", "quantity": 2},
+                {"lists": ["ranged", "support"], "quantity": 3},
+                {"lists": ["signature"]},
+                {"lists": ["drones"], "quantity": 2},
                 {"name": "Ritual des Klingenbundes", "cost": 1, "min": "all"}
             ]
           },
@@ -197,14 +197,14 @@
                 {"name": "Stealth Battlesuit"},
                 [
                     {"name": "Bündelkanone", "default": true},
-                    {"name": "Fusionsblaster", "cost": 5, "requirement": 3}
+                    {"name": "Fusionsblaster", "cost": 5, "requirementsizemodulo": 3}
                 ],
-                {"lists": "support", "quantity": 1},
+                {"lists": ["support"], "quantity": 1},
                 {"name": "Shas'vre", "cost": 10, "quantity": 1},
-                {"lists": "support", "quantity": 2, "requirement": "Shas'vre"},
+                {"lists": ["support"], "quantity": 2, "requirement": "Shas'vre"},
                 {"name": "Signalgeber", "cost": 10, "requirement": "Shas'vre"},
                 {"name": "Zielmarkierer & Multiple Zielerfassung", "cost": 5, "requirement": "Shas'vre"},
-                {"lists": "drones", "quantity": 2, "requirement": "Shas'vre"},
+                {"lists": ["drones"], "quantity": 2, "requirement": "Shas'vre"},
                 {"name": "Ritual des Klingenbundes", "cost": 1, "min": "all"}
             ]
           },
@@ -229,7 +229,7 @@
                         {"name": "Synchronisierter Fusionsblaster", "cost": 10}
                 ],
                 {"name": "MV5 Stealth Drones", "min": 2},
-                {"lists": "support", "quantity": 2},
+                {"lists": ["support"], "quantity": 2},
                 {"name": "Ritual des Klingenbundes", "cost": 1, "min": "all"}
             ]
           },
@@ -254,7 +254,7 @@
                 {"name": "Riptide-Schildgenerator"},
                 {"name": "Novareaktor"},
                 {"name": "Shield Missile Drones", "cost": 25, "quantity": 2},
-                {"lists": "support", "quantity": 2},
+                {"lists": ["support"], "quantity": 2},
                 {"name": "Ritual des Klingenbundes", "cost": 1, "min": "all"}
             ]
           }
@@ -275,13 +275,13 @@
                 {"name": "Photonengranaten"},
                 {"name": "Shas'ui", "cost": 10, "quantity": 1},
                 {"name": "Zielmarkierer & Multiple Zielerfassung", "cost": 15, "requirement": "Shas'ui"},
-                {"lists": "drones", "quantity": 2, "requirement": "Shas'ui"},
+                {"lists": ["drones"], "quantity": 2, "requirement": "Shas'ui"},
                 {"name": "EMP-Granaten", "cost": 2, "min": "all"},
                 {"name": "Taktischer Unterstützungsturm DS8", "cost": 10, "quantity": 1},
                 {"name": "Ritual des Klingenbundes", "cost": 1, "min": "all"}
             ],
             "attach": [
-                {"name": "TY7 Teufelsrochen"}
+                {"name": "TY7 Devilfish"}
             ]
           },
           {
@@ -297,13 +297,13 @@
                 {"name": "Photonengranaten"},
                 {"name": "Shas'ui", "cost": 10, "quantity": 1},
                 {"name": "Zielmarkierer & Multiple Zielerfassung", "cost": 15, "requirement": "Shas'ui"},
-                {"lists": "drones", "quantity": 2, "requirement": "Shas'ui"},
+                {"lists": ["drones"], "quantity": 2, "requirement": "Shas'ui"},
                 {"name": "EMP-Granaten", "cost": 2, "min": "all"},
                 {"name": "Taktischer Unterstützungsturm DS8", "cost": 10, "quantity": 1},
                 {"name": "Ritual des Klingenbundes", "cost": 1, "min": "all"}
             ],
             "attach": [
-                {"name": "TY7 Teufelsrochen"}
+                {"name": "TY7 Devilfish"}
             ]
           },
           {
@@ -337,14 +337,12 @@
             "entityName": "TX4 Piranha",
             "options": [
                 [
-                    [
-                        {"name": "Bündelkanone", "default": true},
-                        {"name": "Fusionsblaster", "cost": 10}
-                    ],
-                    {"name": "MV1 Gun Drone", "min": 2},
-                    {"name": "Lenkrakete", "cost": 8, "quantity": 2},
-                    {"lists": "vehicle"}
-                ]
+                    {"name": "Bündelkanone", "default": true},
+                    {"name": "Fusionsblaster", "cost": 10}
+                ],
+                {"name": "MV1 Gun Drone", "min": 2},
+                {"name": "Lenkrakete", "cost": 8, "quantity": 2},
+                {"lists": ["vehicle"]}
             ]
           },
           {
@@ -357,8 +355,8 @@
             "options": [
                 [
                     {"name": "Pulskarabiner mit Zielmarkierer", "default": true},
-                    {"name": "Ionengewehr", "cost": 10, "max": 3},
-                    {"name": "Massebeleunigergewehr", "cost": 15, "max": 3}
+                    {"name": "Ionengewehr", "cost": 10, "quantity": 3},
+                    {"name": "Massebeleunigergewehr", "cost": 15, "quantity": 3}
                 ],
                 {"name": "Photonengranaten"},
                 {"name": "MB3 Recon Drone", "cost": 28, "quantity": 1},
@@ -366,11 +364,11 @@
                 {"name": "MV33 Grav-inhibitor Drone", "cost": 15, "quantity": 1},
                 {"name": "EMP-Granaten", "cost": 2, "min": "all"},
                 {"name": "Shas'ui", "cost": 10, "quantity": 1},
-                {"lists": "drones", "quantity": 2, "requirement": "Shas'ui"},
+                {"lists": ["drones"], "quantity": 2, "requirement": "Shas'ui"},
                 {"name": "Ritual des Klingenbundes", "cost": 1, "min": "all"}
             ],
             "attach": [
-                {"name": "TY7 Teufelsrochen"}
+                {"name": "TY7 Devilfish"}
             ]
           },
           {
@@ -382,6 +380,7 @@
             "entityName": "MV1 Gun Drone",
             "options": [
                 [
+                    {"name": "MV1 Gun Drone", "cost": 0},
                     {"name": "MV4 Shield Drone", "cost": 0},
                     {"name": "MV7 Marker Drone", "cost": 0}
                 ]
@@ -424,7 +423,7 @@
                     {"name": "Synchronisiertes Schwärmer-Raketensystem", "cost": 10}
                 ],
                 {"name": "Lenkrakete", "cost": 8, "quantity": 2},
-                {"lists": "vehicle"}
+                {"lists": ["vehicle"]}
             ]
           },
           {
@@ -437,7 +436,7 @@
                 ],
                 {"name": "Ionen-Vierlingturm"},
                 {"name": "Lenkrakete", "min": 2},
-                {"lists": "vehicle"}
+                {"lists": ["vehicle"]}
             ]
           },
           {
@@ -452,7 +451,7 @@
                 {"name": "Vernetzter Zielmarkierer"},
                 {"name": "Lenkrakete", "min": 2},
                 {"name": "MV17 Intercptor Drone", "min": 2},
-                {"lists": "vehicle"}
+                {"lists": ["vehicle"]}
             ]
           }
         ],
@@ -476,8 +475,8 @@
                 ],
                 {"name": "Shas'vre", "cost": 10, "quantity": 1},
                 {"name": "Lenkrakete", "cost": 8, "quantity": 1},
-                {"lists": "support", "quantity": 1},
-                {"lists": "drones", "quantity": 2},
+                {"lists": ["support"], "quantity": 1},
+                {"lists": ["drones"], "quantity": 2},
                 {"name": "Ritual des Klingenbundes", "cost": 1, "min": "all"}
             ]
           },
@@ -497,7 +496,7 @@
                     {"name": "Synchronisiertes Bündelkanone", "cost": 0},
                     {"name": "Synchronisiertes Schwärmer-Raketensystem", "cost": 0}
                 ],
-                {"lists": "vehicle"}
+                {"lists": ["vehicle"]}
             ]
           },
           {
@@ -519,7 +518,7 @@
                     {"name": "Synchronisiertes Schwärmer-Raketensystem", "cost": 0}
                 ],
                 {"name": "Lenkrakete", "cost": 8, "quantity": 2},
-                {"lists": "vehicle"},
+                {"lists": ["vehicle"]},
                 {"name": "Longstrike", "cost": 45, "single": "armee"}
             ]
           }
@@ -545,7 +544,7 @@
                         {"name": "Synchronisierter Bündelkanone", "cost": 5},
                         {"name": "Synchronisierter Streugranatwerfer", "cost": 5}
                 ],
-                {"lists": "support", "quantity": 2}
+                {"lists": ["support"], "quantity": 2}
             ]
           },
           {
@@ -586,9 +585,6 @@
     },
     "formations": [
             {
-                "name": "Contigent-Kommando"
-            },
-            {
                 "name": "Hunter Cadre"
             },
             {
@@ -624,5 +620,8 @@
             {
                 "name": "Defence Network"
             }
+    ],
+    "contingent": [
+        {"name": "Hunter Contigent"}
     ]
 }
