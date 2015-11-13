@@ -76,16 +76,19 @@ function checkCodexJson() {
         }
       }
     }
-    
-    // must = default
-    // default = cost: 0
-    // note: todo = print warning
   }
 }
 
 function checkOption($option, $lastName, $file) {
   if(!isset($option->{"name"}) && !isset($option->{"lists"})) {
     godie("option has no name and is not a list", $lastName, $file);
+  }
+  if(isset($option->{"cost"})) {
+    if((isset($option->{"must"}) && $option->{"must"} == true) || (isset($option->{"default"}) && $option->{"default"} == true)) {
+      if($option->{"cost"} > 0) {
+        godie("must or default is set, but cost greater then 0", $lastName, $file);
+      }
+    }
   }
   // TODO list
 }
@@ -101,7 +104,9 @@ function getCodexIndexJson() {
     $content = json_decode(file_get_contents($codexDir . "/" . $file));
     $item = array();
     $item["name"] = $content->{"name"};
-    $item["longname"] = $content->{"longname"};
+    if(isset($content->{"longname"})) {
+      $item["longname"] = $content->{"longname"};
+    }
     $item["date"] = $content->{"date"};
     $item["version"] = $content->{"version"};
     $armee[$file] = $item;

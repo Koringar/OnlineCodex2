@@ -22,28 +22,28 @@ $(document).ready(function() {
  * Gibt das JSON Object wieder
  * 
  * @param {String} uri
- * @param {Function} callback
- * @returns {data|@var;callback|Boolean}
+ * @param {Boolean} cache
+ * @returns {data|@var;cache|Boolean}
  */
-function get(uri, callback) {
+function get(uri, noCache) {
     uri = typeof uri !== "undefined" ? uri : "";
-    callback = typeof callback !== "undefined" ? callback : false;
-    var ajax = $.ajax({
+    noCache = typeof noCache ? false : true;
+    if(!noCache) {
+      if(localStorage.getItem("cache_" + uri)) {
+        return JSON.parse(localStorage.getItem("cache_" + uri));
+      }
+    }
+    var returnValue;
+    $.ajax({
         method: "GET",
         url: uri,
         dataType: "json",
-        async: (callback === false ? false : true)
+        async: false
+    }).done(function (data){
+        returnValue = data;
     });
-    if(callback === false) {
-        var returnValue;
-        ajax.done(function (data){
-            returnValue = data;
-        });
-        return returnValue;
-    } else {
-        ajax.done(callback);
-        return callback;
-    }
+    localStorage.setItem("cache_" + uri, JSON.stringify(returnValue));
+    return returnValue;
 }
 
 /*
@@ -99,7 +99,10 @@ function getNationalText(key, suffix){
  * @returns {@var;callback|Boolean|data}
  */
 function getArmyIndex() {
-  return get("codex/index.json");
+  var armyIndex = get("codex/index.json", true);
+  // TODO Cache leeren nur bei neuen Daten
+  localStorage.clear();
+  return armyIndex;
 }
 
 /*
