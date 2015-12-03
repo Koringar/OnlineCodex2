@@ -1,4 +1,5 @@
-TARGET := build
+
+include build.mf
 
 TOCOPY := css/onlinecode2.css js/onlinecodex2.js \
 	js/libs/jquery/jquery.js js/libs/jquery-mobile/jquery.mobile.js \
@@ -34,36 +35,39 @@ all: $(TOCOMPILETARGET) $(TOCOPYTARGET) \
 	$(INDEXTARGET) $(CODEXTARGET) \
 	$(CACHEMANIFEST) $(LANGTARGET)
 
-$(INDEXTARGET): $(addsuffix .php,$(INDEX)) | $(TARGET)
+$(INDEXTARGET): $(addsuffix .php,$(INDEX)) | $(DIRS)
 	$(PHP) $< > $@
 
-$(TOCOMPILETARGET): | $(TARGET)
+$(TOCOMPILETARGET): | $(DIRS)
 	for i in $(TOCOMPILE); do \
 	  $(PHP) $$i.php > $(addprefix $(TARGET)/, $$i) ; \
 	done
 
-$(CODEXTARGET): | $(TARGET)
+$(CODEXTARGET): | $(DIRS)
 	for i in $(CODEX); do \
 	  $(PHP) helper.php minJson $$i $(addprefix $(TARGET)/, $$i) ;\
 	done
 	
-$(LANGTARGET): | $(TARGET)
+$(LANGTARGET): | $(DIRS)
 	for i in $(LANG); do \
 	  $(PHP) helper.php minJson $$i $(addprefix $(TARGET)/, $$i) ;\
 	done
 
-$(TOCOPYTARGET): | $(TARGET)
+$(TOCOPYTARGET): | $(DIRS)
 	for i in $(TOCOPY); do \
 	  $(PHP) helper.php minJsCss $$i $(addprefix $(TARGET)/, $$i) ; \
 	done
 
-$(CACHEMANIFEST): | $(TARGET)
+$(CACHEMANIFEST): | $(DIRS)
 	$(PHP) helper.php genCacheManifest $(CACHEMANIFEST) $(INDEXTARGET:$(TARGET)/%=%) $(TOCOMPILETARGET:$(TARGET)/%=%) $(TOCOPYTARGET:$(TARGET)/%=%)
 
-$(TARGET):
+$(DIRS): | $(TARGET)
 	for i in $(DIRS); do \
 	  mkdir $$i ; \
 	done
+	
+$(TARGET):
+	mkdir $(TARGET)
 	
 .PHONY: clean
 clean:
@@ -72,3 +76,6 @@ clean:
 .PHONY: checkCodexJson
 checkCodexJson:
 	$(PHP) helper.php checkCodexJson
+
+build.mf: 
+	echo 'TARGET := build' > build.mf
