@@ -12,3 +12,7 @@ build.properties
 run.cmd
 config.php
 build.mf
+composer.json
+composer.lock
+vendor/
+

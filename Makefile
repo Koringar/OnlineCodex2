@@ -77,5 +77,10 @@ clean:
 checkCodexJson:
 	$(PHP) helper.php checkCodexJson
 
+.PHONY: installDepencys
+installDepencys:
+	composer require justinrainbow/json-schema:~1.3
+
 build.mf: 
 	echo 'TARGET := build' > build.mf
+
