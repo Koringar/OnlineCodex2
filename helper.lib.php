@@ -1,5 +1,8 @@
 <?php
 
+// https://github.com/justinrainbow/json-schema
+include './vendor/autoload.php';
+// new JsonSchema\Uri\UriResolver;
 function checkCodexJson() {
   $codexIndexJson = json_decode(getCodexIndexJson());
   $codexDir = "codex";
