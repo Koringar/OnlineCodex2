@@ -77,7 +77,7 @@ clean:
 checkCodexJson:
 	$(PHP) helper.php checkCodexJson
 
-.PHONY: installDepencys
+.PHONY: installDependency
 installDepencys:
 	composer require justinrainbow/json-schema:~1.3
 
